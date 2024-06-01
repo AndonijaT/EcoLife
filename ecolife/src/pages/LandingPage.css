@@ -376,6 +376,22 @@ blockquote {
   margin-top: 10px;
 }
 
+.logout-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #f0ad4e;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #ec971f;
+}
 .login-link {
   display: block;
   margin-top: 20px;

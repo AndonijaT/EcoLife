@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './LandingPage.css';
 import VideoBackground from '../VideoBackground';
 import { useAuth } from '../AuthContext';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
 
 const testimonials = [
   {
@@ -39,7 +41,7 @@ const testimonials = [
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [showPopup, setShowPopup] = useState(false); // State for popup visibility
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuth(); // Ensure this line is included to get the current user
   const navigate = useNavigate();
 
   const nextTestimonial = () => {
@@ -62,9 +64,18 @@ const LandingPage: React.FC = () => {
     setShowPopup(false);
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login'); // Redirect to login page after logout
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <div className="landing-page">
+      <VideoBackground />
       <nav className="navigation">
         <div className="link">
           <Link to="/">
@@ -92,6 +103,7 @@ const LandingPage: React.FC = () => {
                 <span className="text">Tracking</span>
               </Link>
             </div>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
           </>
         ) : (
           <div className="link">
@@ -102,7 +114,6 @@ const LandingPage: React.FC = () => {
           </div>
         )}
       </nav>
-      <VideoBackground />
       <main>
         <section className="hero">
           <h1>About us</h1>
