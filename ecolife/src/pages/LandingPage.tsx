@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './LandingPage.css';
 import VideoBackground from '../VideoBackground';
@@ -38,7 +38,9 @@ const testimonials = [
 
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const { currentUser } = useAuth(); // Ensure this line is included to get the current user
+  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
   const nextTestimonial = () => {
     setCurrentTestimonial((currentTestimonial + 1) % testimonials.length);
@@ -47,6 +49,19 @@ const LandingPage: React.FC = () => {
   const prevTestimonial = () => {
     setCurrentTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length);
   };
+
+  const handleServiceClick = (path: string) => {
+    if (!currentUser) {
+      setShowPopup(true);
+    } else {
+      navigate(path);
+    }
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
 
   return (
     <div className="landing-page">
@@ -102,28 +117,33 @@ const LandingPage: React.FC = () => {
         
         <section className="services">
           <h1>Our Services</h1>
-          <div className="service">
-            <Link to="/articles">
-              <img src="/assets/service1.jpg" alt="Educate" />
-              <h3>Educate</h3>
-              <p>Learn more about sustainability!</p>
-            </Link>
+          <div className="service" onClick={() => handleServiceClick('/articles')}>
+            <img src="/assets/service1.jpg" alt="Educate" />
+            <h3>Educate</h3>
+            <p>Learn more about sustainability!</p>
           </div>
-          <div className="service">
-            <Link to="/shop">
-              <img src="/assets/service2.png" alt="Shop" />
-              <h3>Shop</h3>
-              <p>Money is donated to eco projects</p>
-            </Link>
+          <div className="service" onClick={() => handleServiceClick('/shop')}>
+            <img src="/assets/service2.png" alt="Shop" />
+            <h3>Shop</h3>
+            <p>Money is donated to eco projects</p>
           </div>
-          <div className="service">
-            <Link to="/tracking">
-              <img src="/assets/service3.png" alt="Tracking" />
-              <h3>Tracking</h3>
-              <p>Go green</p>
-            </Link>
+          <div className="service" onClick={() => handleServiceClick('/tracking')}>
+            <img src="/assets/service3.png" alt="Tracking" />
+            <h3>Tracking</h3>
+            <p>Go green</p>
           </div>
         </section>
+
+        {/* Popup for login prompt */}
+        {showPopup && (
+          <div className="popup">
+            <div className="popup-inner">
+              <h2>You need to login first</h2>
+              <button onClick={closePopup} className="close-btn">Close</button>
+              <Link to="/login" onClick={closePopup} className="login-link">Login now</Link>
+            </div>
+          </div>
+        )}
 
         <section className="newsletter">
           <div className="newsletter-content">
