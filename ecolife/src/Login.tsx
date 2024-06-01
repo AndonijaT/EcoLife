@@ -14,7 +14,6 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      alert('Logged in successfully');
       navigate('/'); // Redirect to the landing page
     } catch (error: any) {
       alert(error.message);

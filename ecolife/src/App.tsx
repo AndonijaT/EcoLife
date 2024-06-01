@@ -6,7 +6,6 @@ import Articles from './pages/Articles';
 import Tracking from './pages/Tracking';
 import Login from './Login';
 import Register from './Register';
-import Logout from './Logout';
 import Profile from './pages/Profile';
 import { AuthProvider, useAuth } from './AuthContext';
 
@@ -24,7 +23,6 @@ const App: React.FC = () => {
             <Route path="/tracking" element={<Tracking />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/logout" element={<Logout />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>

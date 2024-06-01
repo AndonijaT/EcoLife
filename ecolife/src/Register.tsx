@@ -14,7 +14,6 @@ const Register: React.FC = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      alert('Registered successfully');
       navigate('/'); // Redirect to the landing page
     } catch (error: any) {
       alert(error.message);
