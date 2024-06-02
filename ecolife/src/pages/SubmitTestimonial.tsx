@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import { useAuth } from '../AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SubmitTestimonial: React.FC = () => {
   const [text, setText] = useState('');
@@ -19,12 +21,12 @@ const SubmitTestimonial: React.FC = () => {
           createdAt: new Date()
         });
         setText('');
-        alert('Testimonial submitted successfully');
+        toast.info('Testimonial submitted successfully');
       } catch (error) {
-        console.error('Error adding document: ', error);
+        toast.error('Error adding document: ');
       }
     } else {
-      alert('You need to be logged in to submit a testimonial');
+      toast.error('You need to be logged in to submit a testimonial');
     }
   };
 
@@ -40,6 +42,7 @@ const SubmitTestimonial: React.FC = () => {
         />
         <button type="submit">Submit</button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

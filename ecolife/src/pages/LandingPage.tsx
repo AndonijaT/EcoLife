@@ -67,12 +67,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="landing-page">
       <nav className="navigation">
-        <div className="link">
-          <Link to="/">
-            <img src="/assets/home.svg" alt="Home" />
-            <span className="text">Home</span>
-          </Link>
-        </div>
+       
         {currentUser ? (
           <>
             <div className="link">
