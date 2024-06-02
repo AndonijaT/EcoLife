@@ -1,4 +1,3 @@
-// src/pages/LandingPage.tsx
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -9,6 +8,8 @@ import { useAuth } from '../AuthContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { db } from '../firebaseConfig';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -16,7 +17,6 @@ const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const { currentUser } = useAuth(); // Ensure this line is included to get the current user
   const [testimonials, setTestimonials] = useState<any[]>([]);
-  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,22 +38,20 @@ const LandingPage: React.FC = () => {
   };
   const handleServiceClick = (path: string) => {
     if (!currentUser) {
-      setShowPopup(true);
+      toast.error('You need to log in first');
     } else {
       navigate(path);
     }
   };
 
-  const closePopup = () => {
-    setShowPopup(false);
-  };
+  
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
       navigate('/login'); // Redirect to login page after logout
     } catch (error) {
-      console.error("Error logging out:", error);
+      toast.error("Error logging out:");
     }
   };
 
@@ -61,10 +59,10 @@ const LandingPage: React.FC = () => {
     if (currentUser) {
       navigate('/submit-testimonial');
     } else {
-      alert('You need to log in first');
-      navigate('/login');
+      toast.error('You need to log in first');
     }
   };
+
 
   return (
     <div className="landing-page">
@@ -144,17 +142,7 @@ const LandingPage: React.FC = () => {
             <p>Go green</p>
           </div>
         </section>
-          {/* Popup for login prompt */}
-          {showPopup && (
-          <div className="popup">
-            <div className="popup-inner">
-              <h2>You need to login first</h2>
-              <button onClick={closePopup} className="close-btn">Close</button>
-              <Link to="/login" onClick={closePopup} className="login-link">Login now</Link>
-            </div>
-          </div>
-        )}
-
+         
         <section className="newsletter">
           <div className="newsletter-content">
             <div className="newsletter-text">
@@ -214,6 +202,8 @@ const LandingPage: React.FC = () => {
           </div>
         </footer>
       </main>
+      <ToastContainer />
+
     </div>
   );
 };
