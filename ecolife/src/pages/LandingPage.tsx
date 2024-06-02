@@ -53,9 +53,19 @@ const testimonials: Testimonial[] = [
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const { currentUser } = useAuth(); // Ensure this line is included to get the current user
+  const [testimonials, setTestimonials] = useState<any[]>([]);
   const [showPopup, setShowPopup] = useState(false); // State for popup visibility
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const querySnapshot = await getDocs(collection(db, 'testimonials'));
+      const fetchedTestimonials = querySnapshot.docs.map(doc => doc.data());
+      setTestimonials(fetchedTestimonials);
+    };
+
+    fetchTestimonials();
+  }, []);
 
   const nextTestimonial = () => {
     setCurrentTestimonial((currentTestimonial + 1) % testimonials.length);
@@ -183,25 +193,26 @@ const LandingPage: React.FC = () => {
 
         <section className="testimonials-carousel">
           <h2>Clients Talk</h2>
-          <div className="testimonial-card">
-            <div className="testimonial-content">
-              <div className="testimonial-text">
-                <h3>{testimonials[currentTestimonial].name}</h3>
-                <p className="title">{testimonials[currentTestimonial].title}</p>
-                <p className="text">{testimonials[currentTestimonial].text}</p>
+          {testimonials.length > 0 ? (
+            <div className="testimonial-card">
+              <div className="testimonial-content">
+                <div className="testimonial-text">
+                  <h3>{testimonials[currentTestimonial].name}</h3>
+                  <p className="title">{testimonials[currentTestimonial].title}</p>
+                  <p className="text">{testimonials[currentTestimonial].text}</p>
+                </div>
+                <div className="testimonial-image">
+                  <img src={testimonials[currentTestimonial].image} alt={testimonials[currentTestimonial].name} />
+                </div>
               </div>
-              <div className="testimonial-image">
-                <img src={testimonials[currentTestimonial].image} alt={testimonials[currentTestimonial].name} />
+              <div className="testimonial-navigation">
+                <button onClick={prevTestimonial}>←</button>
+                <button onClick={nextTestimonial}>→</button>
               </div>
             </div>
-            <div className="testimonial-navigation">
-              <button onClick={prevTestimonial}>←</button>
-              <button onClick={nextTestimonial}>→</button>
-            </div>
-            {currentUser && (
-              <Link to="/submit-testimonial" className="add-testimonial-button">+</Link>
-            )}
-          </div>
+          ) : (
+            <p>No testimonials yet</p>
+          )}
         </section>
 
         <footer className="footer bg-dark text-light py-5">
