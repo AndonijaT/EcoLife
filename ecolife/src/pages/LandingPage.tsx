@@ -57,6 +57,15 @@ const LandingPage: React.FC = () => {
     }
   };
 
+  const handleAddTestimonial = () => {
+    if (currentUser) {
+      navigate('/submit-testimonial');
+    } else {
+      alert('You need to log in first');
+      navigate('/login');
+    }
+  };
+
   return (
     <div className="landing-page">
       <nav className="navigation">
@@ -84,6 +93,12 @@ const LandingPage: React.FC = () => {
               <Link to="/tracking">
                 <img src="/assets/tracking.svg" alt="Tracking" />
                 <span className="text">Tracking</span>
+              </Link>
+            </div>
+            <div className="link">
+              <Link to="/profile">
+                <img src="/assets/login.svg" alt="Profile" />
+                <span className="text">Profile</span>
               </Link>
             </div>
             <button className="logout-button" onClick={handleLogout}>Logout</button>
@@ -169,8 +184,12 @@ const LandingPage: React.FC = () => {
             <div className="testimonial-navigation">
               <button onClick={prevTestimonial}>←</button>
               <button onClick={nextTestimonial}>→</button>
+
             </div>
+            <button className="add-testimonial-btn" onClick={handleAddTestimonial}>+</button>
+
           </div>
+
         </section>
 
         <footer className="footer bg-dark text-light py-5">

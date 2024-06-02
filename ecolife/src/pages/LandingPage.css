@@ -421,20 +421,13 @@ blockquote {
   border-top: 1px solid #444;
   font-size: 0.875rem;
 }
-/* src/pages/LandingPage.css */
-.add-testimonial-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  font-size: 24px;
-  border-radius: 50%;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 0.3s;
+
+
+.add-testimonial-btn {
+  align-items: center;
+  justify-content: center;
 }
 
-.add-testimonial-button:hover {
-  background-color: #218838;
+.add-testimonial-btn:hover {
+  background-color: #45a049;
 }

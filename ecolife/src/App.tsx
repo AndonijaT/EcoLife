@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage';
 import Shop from './pages/Shop';
 import Articles from './pages/Articles';
 import Tracking from './pages/Tracking';
+import Profile from './pages/Profile';
 import Login from './Login';
 import Register from './Register';
 import SubmitTestimonial from './pages/SubmitTestimonial';
@@ -24,6 +25,8 @@ const App: React.FC = () => {
           <Link to="/articles">Articles</Link>
           <Link to="/shop">Shop</Link>
           <Link to="/tracking">Tracking</Link>
+          <Link to="/profile">Profile</Link>
+
           {currentUser ? (
             <>
               <Link to="/logout">Logout</Link>
@@ -39,6 +42,7 @@ const App: React.FC = () => {
         <Route path="/articles" element={<Articles />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/tracking" element={<Tracking />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/submit-testimonial" element={<SubmitTestimonial />} />
