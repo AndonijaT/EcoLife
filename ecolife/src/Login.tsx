@@ -28,7 +28,6 @@ const Login: React.FC = () => {
           <Link to="/articles">Articles</Link>
           <Link to="/shop">Shop</Link>
           <Link to="/tracking">Tracking</Link>
-          <Link to="/login">Login</Link>
         </div>
       </nav>
       <div className="login-container">

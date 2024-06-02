@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+// src/pages/LandingPage.tsx
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './LandingPage.css';
+import { collection, getDocs } from 'firebase/firestore';
 import VideoBackground from '../VideoBackground';
 import { useAuth } from '../AuthContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
+import { db } from '../firebaseConfig';
 
-const testimonials = [
+
+interface Testimonial {
+  name: string;
+  title: string;
+  text: string;
+  image: string;
+  rating: number;
+}
+
+const testimonials: Testimonial[] = [
   {
     name: 'Manaf Hasan',
     title: 'Manager',
@@ -40,9 +52,10 @@ const testimonials = [
 
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
   const { currentUser } = useAuth(); // Ensure this line is included to get the current user
+  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
   const navigate = useNavigate();
+
 
   const nextTestimonial = () => {
     setCurrentTestimonial((currentTestimonial + 1) % testimonials.length);
@@ -51,7 +64,6 @@ const LandingPage: React.FC = () => {
   const prevTestimonial = () => {
     setCurrentTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length);
   };
-
   const handleServiceClick = (path: string) => {
     if (!currentUser) {
       setShowPopup(true);
@@ -75,9 +87,13 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="landing-page">
-      <VideoBackground />
       <nav className="navigation">
-       
+        <div className="link">
+          <Link to="/">
+            <img src="/assets/home.svg" alt="Home" />
+            <span className="text">Home</span>
+          </Link>
+        </div>
         {currentUser ? (
           <>
             <div className="link">
@@ -99,6 +115,7 @@ const LandingPage: React.FC = () => {
               </Link>
             </div>
             <button className="logout-button" onClick={handleLogout}>Logout</button>
+
           </>
         ) : (
           <div className="link">
@@ -109,6 +126,7 @@ const LandingPage: React.FC = () => {
           </div>
         )}
       </nav>
+      <VideoBackground />
       <main>
         <section className="hero">
           <h1>About us</h1>
@@ -139,9 +157,8 @@ const LandingPage: React.FC = () => {
             <p>Go green</p>
           </div>
         </section>
-
-        {/* Popup for login prompt */}
-        {showPopup && (
+          {/* Popup for login prompt */}
+          {showPopup && (
           <div className="popup">
             <div className="popup-inner">
               <h2>You need to login first</h2>
@@ -181,6 +198,9 @@ const LandingPage: React.FC = () => {
               <button onClick={prevTestimonial}>←</button>
               <button onClick={nextTestimonial}>→</button>
             </div>
+            {currentUser && (
+              <Link to="/submit-testimonial" className="add-testimonial-button">+</Link>
+            )}
           </div>
         </section>
 
