@@ -1,0 +1,52 @@
+/* src/components/NewsletterForm.css */
+.newsletter-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .newsletter-text {
+    margin-bottom: 1rem;
+  }
+  
+  .newsletter-text h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .newsletter-text p {
+    font-size: 1.2rem;
+  }
+  
+  .newsletter-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .newsletter-input input {
+    padding: 0.5rem;
+    border-radius: 4px 0 0 4px;
+    border: none;
+    width: 250px;
+  }
+  
+  .newsletter-input button {
+    padding: 0.5rem;
+    border-radius: 0 4px 4px 0;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .newsletter-input button:hover {
+    background-color: #444;
+  }
+  

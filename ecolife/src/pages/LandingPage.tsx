@@ -10,6 +10,7 @@ import { auth } from '../firebaseConfig';
 import { db } from '../firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NewsletterForm from './../NewsletterForm'; // Import the component
 
 
 
@@ -25,7 +26,7 @@ const LandingPage: React.FC = () => {
       const testimonialsData = querySnapshot.docs.map(doc => doc.data());
       setTestimonials(testimonialsData);
     };
-    
+
     fetchTestimonials();
   }, []);
 
@@ -44,7 +45,7 @@ const LandingPage: React.FC = () => {
     }
   };
 
-  
+
 
   const handleLogout = async () => {
     try {
@@ -67,7 +68,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="landing-page">
       <nav className="navigation">
-       
+
         {currentUser ? (
           <>
             <div className="link">
@@ -118,7 +119,7 @@ const LandingPage: React.FC = () => {
           <h3></h3>
           <p></p>
         </section>
-        
+
         <section className="services">
           <h1>Our Services</h1>
           <div className="service" onClick={() => handleServiceClick('/articles')}>
@@ -137,19 +138,12 @@ const LandingPage: React.FC = () => {
             <p>Go green</p>
           </div>
         </section>
-         
+
+        
         <section className="newsletter">
-          <div className="newsletter-content">
-            <div className="newsletter-text">
-              <h2>Get 10% OFF</h2>
-              <p>Subscribe to our newsletter and get 10% off in our shop!</p>
-            </div>
-            <div className="newsletter-input">
-              <input type="email" placeholder="Your Email Address" />
-              <button type="button">Subscribe</button>
-            </div>
-          </div>
+          <NewsletterForm /> {/* Add this line to include the form */}
         </section>
+       
 
         <section className="testimonials-carousel">
           <h2>Clients Talk</h2>
@@ -177,28 +171,25 @@ const LandingPage: React.FC = () => {
 
         <footer className="footer bg-dark text-light py-5">
           <div className="container">
-            <div className="row">
+            <div className="row justify-content-center text-center">
               <div className="col-md-4">
                 <h5>Contact Us</h5>
                 <p><a href="mailto:lifeeco18@yahoo.com" className="text-light">Email Us</a></p>
-                <p>Call Us</p>
+                <p><a href="tel:+123456789" className="text-light">Call Us</a></p>
               </div>
               <div className="col-md-4">
                 <h5>Connect</h5>
-                <div className="d-flex">
+                <div className="d-flex justify-content-center">
                   <a href="#" className="text-light me-3"><i className="fab fa-linkedin"></i></a>
                   <a href="#" className="text-light"><i className="fab fa-twitter"></i></a>
                 </div>
               </div>
-            </div>
-            <div className="footer-bottom mt-4">
               <p className="mb-0">Copyright © 2023. All Rights Reserved.</p>
             </div>
           </div>
         </footer>
       </main>
       <ToastContainer />
-
     </div>
   );
 };
