@@ -11,44 +11,6 @@ import { auth } from '../firebaseConfig';
 import { db } from '../firebaseConfig';
 
 
-interface Testimonial {
-  name: string;
-  title: string;
-  text: string;
-  image: string;
-  rating: number;
-}
-
-const testimonials: Testimonial[] = [
-  {
-    name: 'Manaf Hasan',
-    title: 'Manager',
-    text: 'Deforestation, and climate change, have led to a decline in biodiversity and negative impacts on ecosystems. Ecologists use a variety of methods, such as field observations, experiments, and modeling.',
-    image: '/assets/man.avif',
-    rating: 5
-  },
-  {
-    name: 'Andonija Todorova',
-    title: 'Founder',
-    text: 'Something about ecology and sustainability.',
-    image: '/assets/person2.jpg',
-    rating: 4
-  },
-  {
-    name: 'Jane Doe',
-    title: 'Environmental Scientist',
-    text: 'Our planet\'s health is paramount. Through sustainable practices, we can ensure a greener future for generations to come.',
-    image: '/assets/person3.jpg',
-    rating: 4
-  },
-  {
-    name: 'John Smith',
-    title: 'Conservationist',
-    text: 'Conservation is not just about saving wildlife, it\'s about preserving our own future and the well-being of our communities.',
-    image: '/assets/person4.jpg',
-    rating: 5
-  }
-];
 
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -60,10 +22,10 @@ const LandingPage: React.FC = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       const querySnapshot = await getDocs(collection(db, 'testimonials'));
-      const fetchedTestimonials = querySnapshot.docs.map(doc => doc.data());
-      setTestimonials(fetchedTestimonials);
+      const testimonialsData = querySnapshot.docs.map(doc => doc.data());
+      setTestimonials(testimonialsData);
     };
-
+    
     fetchTestimonials();
   }, []);
 
@@ -193,26 +155,22 @@ const LandingPage: React.FC = () => {
 
         <section className="testimonials-carousel">
           <h2>Clients Talk</h2>
-          {testimonials.length > 0 ? (
-            <div className="testimonial-card">
+          <div className="testimonial-card">
+            {testimonials.length > 0 ? (
               <div className="testimonial-content">
                 <div className="testimonial-text">
-                  <h3>{testimonials[currentTestimonial].name}</h3>
-                  <p className="title">{testimonials[currentTestimonial].title}</p>
+                  <h3>{testimonials[currentTestimonial].userName}</h3>
                   <p className="text">{testimonials[currentTestimonial].text}</p>
                 </div>
-                <div className="testimonial-image">
-                  <img src={testimonials[currentTestimonial].image} alt={testimonials[currentTestimonial].name} />
-                </div>
               </div>
-              <div className="testimonial-navigation">
-                <button onClick={prevTestimonial}>←</button>
-                <button onClick={nextTestimonial}>→</button>
-              </div>
+            ) : (
+              <p>No testimonials available</p>
+            )}
+            <div className="testimonial-navigation">
+              <button onClick={prevTestimonial}>←</button>
+              <button onClick={nextTestimonial}>→</button>
             </div>
-          ) : (
-            <p>No testimonials yet</p>
-          )}
+          </div>
         </section>
 
         <footer className="footer bg-dark text-light py-5">
