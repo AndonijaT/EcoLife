@@ -108,7 +108,7 @@ const LandingPage: React.FC = () => {
           </div>
         )}
       </nav>
-      <VideoBackground />
+      <VideoBackground videoSrc="/assets/background-video.mp4" overlayText="EcoLife" />
       <main>
         <section className="hero">
           <h1>About us</h1>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Shop.css';
-import VideoShop from '../VideoShop';
+import VideoBackground from '../VideoBackground';
 
 const Shop = () => {
 
@@ -33,7 +33,7 @@ const Shop = () => {
           </Link>
         </div>
       </nav>
-      <VideoShop />
+      <VideoBackground videoSrc="/assets/video-shop.mp4" overlayText=" Shop " />
       <main>
         
        
