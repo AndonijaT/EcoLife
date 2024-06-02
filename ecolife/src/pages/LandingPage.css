@@ -431,3 +431,18 @@ blockquote {
 .add-testimonial-btn:hover {
   background-color: #45a049;
 }
+.footer .fab {
+  font-size: 1.5rem; /* Adjust the size as needed */
+}
+
+.footer .fab:hover {
+  color: #0e76a8; /* LinkedIn blue for LinkedIn icon */
+}
+
+.footer .fab.fa-twitter:hover {
+  color: #1da1f2; /* Twitter blue for Twitter icon */
+}
+
+.footer .text-light {
+  text-decoration: none;
+}

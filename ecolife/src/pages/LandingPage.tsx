@@ -11,6 +11,7 @@ import { db } from '../firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NewsletterForm from './../NewsletterForm'; // Import the component
+import { SocialIcon } from 'react-social-icons'
 
 
 
@@ -46,7 +47,6 @@ const LandingPage: React.FC = () => {
   };
 
 
-
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -66,6 +66,7 @@ const LandingPage: React.FC = () => {
 
 
   return (
+
     <div className="landing-page">
       <nav className="navigation">
 
@@ -139,11 +140,11 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        
+
         <section className="newsletter">
           <NewsletterForm /> {/* Add this line to include the form */}
         </section>
-       
+
 
         <section className="testimonials-carousel">
           <h2>Clients Talk</h2>
@@ -180,12 +181,12 @@ const LandingPage: React.FC = () => {
               <div className="col-md-4">
                 <h5>Connect</h5>
                 <div className="d-flex justify-content-center">
-                  <a href="#" className="text-light me-3"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-light"><i className="fab fa-twitter"></i></a>
+                  <SocialIcon url="https://www.linkedin.com/in/eco-life-bbb50b311/" className="me-3" />
+                  <SocialIcon url="https://www.twitter.com" />
                 </div>
               </div>
-              <p className="mb-0">Copyright © 2023. All Rights Reserved.</p>
             </div>
+            <p className="mb-0 text-center">Copyright © 2023. All Rights Reserved.</p>
           </div>
         </footer>
       </main>
