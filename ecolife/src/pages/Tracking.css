@@ -1,48 +1,47 @@
 /* src/pages/Tracking.css */
 .tracking-page {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-image: url('/assets/footprint.jpg'); /* Update the path to your image */
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-  }
-  
-  .tracking-content {
-    background: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background */
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .tracking-content h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-  
-  .tracking-content p {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .tracking-content .foot-button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  .tracking-content .foot-button img {
-    width: 100px;
-    height: auto;
-  }
-  
-  .tracking-content .foot-button:hover img {
-    transform: scale(1.1);
-  }
-  
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url('/public/assets/footprint.jpg'); /* Update the path to your image */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.tracking-content {
+  background: rgba(31, 68, 35, 0.5); /* Add a semi-transparent background */
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.tracking-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.tracking-content p {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.tracking-content .foot-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.tracking-content .foot-button img {
+  width: 100px;
+  height: auto;
+}
+
+.tracking-content .foot-button:hover img {
+  transform: scale(1.1);
+}

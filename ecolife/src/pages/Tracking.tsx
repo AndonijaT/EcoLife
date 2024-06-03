@@ -13,14 +13,14 @@ const Tracking: React.FC = () => {
   return (
     <div className="tracking-page">
       <div className="tracking-content">
-        <h1>What is your Ecological Footprint?</h1>
-        <p>How many planets do we need if everybody lives like you?</p>
-        <p>When is your personal Overshoot Day?</p>
+        <h1>"Calculate your ecological footprint!"</h1>
+        <p>Take your first step!</p>
         <button className="foot-button" onClick={handleFootClick}>
-          <img src="/assets/foot-icon.png" alt="Take the first step" /> {/* Update with your foot image path */}
+          <img src="/assets/footprintt.png" alt="Take the first step" /> {/* Update with your foot image path */}
         </button>
       </div>
     </div>
+    
   );
 };
 

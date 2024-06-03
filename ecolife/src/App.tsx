@@ -15,7 +15,7 @@ const NavBar: React.FC = () => {
   const { currentUser } = useAuth();
   const location = useLocation();
 
-  const shouldHideNavBar = location.pathname === '/login' || location.pathname === '/register';
+  const shouldHideNavBar = location.pathname === '/login' || location.pathname === '/register'|| location.pathname === '/tracking';
 
   if (shouldHideNavBar) return null;
 
