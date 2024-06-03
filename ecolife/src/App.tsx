@@ -11,7 +11,7 @@ import Profile from './pages/Profile';
 import SubmitTestimonial from './pages/SubmitTestimonial';
 import ProtectedRoute from './ProtectedRoute';
 import { AuthProvider, useAuth } from './AuthContext';
-import Quiz from './pages/quiz/Quiz';
+import Quiz from './pages/calculator/Quiz';
 
 const NavBar: React.FC = () => {
   const { currentUser } = useAuth();
