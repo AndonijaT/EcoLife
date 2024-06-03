@@ -4,6 +4,7 @@ import { doc, getDoc, setDoc, updateDoc, deleteDoc, collection, query, where, ge
 import { db } from '../firebaseConfig';  // Ensure the db import is correct
 import { useAuth } from '../AuthContext';
 import { Line } from 'react-chartjs-2';
+import 'chart.js/auto'; // This imports and registers the required Chart.js components
 import './Profile.css';
 
 const Profile: React.FC = () => {
@@ -134,9 +135,7 @@ const Profile: React.FC = () => {
       )}
       <h2>Quiz Results</h2>
       {results.length > 0 ? (
-        results.map(result => (
-          <p>Result!</p>
-        ))
+        <Line data={data} />
       ) : (
         <p>No quiz results available.</p>
       )}
