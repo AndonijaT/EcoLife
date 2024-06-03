@@ -1,10 +1,13 @@
-// src/components/Quiz.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../AuthContext';
+import { db } from '../../firebaseConfig'; 
+import { collection, addDoc, Timestamp } from 'firebase/firestore'; 
 import './Quiz.css';
 
 const Quiz: React.FC = () => {
+  const { currentUser } = useAuth();
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState(Array(12).fill(0)); // Initial values for 12 questions
+  const [answers, setAnswers] = useState(Array(12).fill(0)); 
   const [finalScore, setFinalScore] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
 
@@ -167,7 +170,6 @@ const Quiz: React.FC = () => {
       const answer = answers[question.id - 1]; // Use index in the answers array
       switch (question.id) {
         case 1:
-          // How far do you travel by car or motorcycle each week?
           if (answer <= 50) score += 10;
           else if (answer <= 100) score += 8;
           else if (answer <= 200) score += 6;
@@ -175,13 +177,11 @@ const Quiz: React.FC = () => {
           else score += 1;
           break;
         case 2:
-          // What is the average fuel economy of the vehicles you use most often?
           if (answer < 7) score += 9;
           else if (answer <= 12) score += 5;
           else score += 1;
           break;
         case 3:
-          // How often do you eat animal-based products?
           if (answer === 1) score += 10;
           else if (answer === 2) score += 9;
           else if (answer === 3) score += 8;
@@ -191,14 +191,12 @@ const Quiz: React.FC = () => {
           else if (answer === 7) score += 4;
           break;
         case 4:
-          // How much of the food that you eat is unprocessed, unpackaged, or locally grown?
           if (answer >= 80) score += 10;
           else if (answer >= 50) score += 8;
           else if (answer >= 30) score += 6;
           else score += 3;
           break;
         case 5:
-          // Which housing type best describes your home?
           if (answer === 0) score += 10;
           else if (answer === 1) score += 10;
           else if (answer === 2) score += 8;
@@ -206,20 +204,17 @@ const Quiz: React.FC = () => {
           else if (answer === 4) score += 5;
           break;
         case 6:
-          // What material is your house constructed with?
           if (answer === 0) score += 10;
           else if (answer === 1) score += 10;
           else if (answer === 2) score += 5;
           else if (answer === 3) score += 1;
           break;
         case 7:
-          // How many people live in your household?
           if (answer === 1) score += 2;
           else if (answer === 2) score += 5;
           else if (answer > 2) score += 10;
           break;
         case 8:
-          // What is the size of your home?
           if (answer <= 20) score += 10;
           else if (answer <= 30) score += 9;
           else if (answer <= 50) score += 8;
@@ -228,20 +223,16 @@ const Quiz: React.FC = () => {
           else score += 2;
           break;
         case 9:
-          // Do you have electricity in your home?
           if (answer === 1) score += 10;
           else if (answer === 0) score += 5;
           break;
         case 10:
-          // How energy efficient is your home?
-          score += answer; // Directly use the answer as the score (assuming answer is between 1 and 10)
+          score += answer; 
           break;
         case 11:
-          // What percentage of your home's electricity comes from renewable sources?
-          score += Math.floor(answer / 10); // Divide by 10 to get the score (0-10)
+          score += Math.floor(answer / 10); 
           break;
         case 12:
-          // Compared to your neighbors, how much trash do you generate?
           if (answer === 1) score += 10;
           else if (answer === 2) score += 9;
           else if (answer === 3) score += 8;
@@ -250,11 +241,11 @@ const Quiz: React.FC = () => {
           else if (answer === 6) score += 5;
           else if (answer === 7) score += 4;
           break;
-        // Add other cases as needed
       }
     });
-    setFinalScore(Math.round(score / questions.length));
-    setShowSummary(true); // Show summary after calculating score
+    const final = Math.round(score / questions.length);
+    setFinalScore(final);
+    return final;
   };
 
   const handleValueChange = (index: number, value: number) => {
@@ -267,13 +258,34 @@ const Quiz: React.FC = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      calculateScore(); // Calculate score when reaching the end
+      const score = calculateScore();
+      setShowSummary(true);
+      saveResult(score); // Save the result after calculating the score
     }
   };
 
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
+    }
+  };
+
+  const saveResult = async (score: number) => {
+    if (currentUser) {
+      console.log("Current User ID:", currentUser.uid);
+      console.log("Final Score:", score);
+      try {
+        await addDoc(collection(db, 'quizResults'), {
+          userId: currentUser.uid,
+          score: score,
+          date: Timestamp.fromDate(new Date()),
+        });
+        console.log("Result saved successfully!");
+      } catch (error) {
+        console.error("Error saving result:", error);
+      }
+    } else {
+      console.error("No current user authenticated!");
     }
   };
 
@@ -287,47 +299,49 @@ const Quiz: React.FC = () => {
         </div>
       ) : (
         <>
-          <h2>{questions[currentQuestion]?.title}</h2>
-          <p>{questions[currentQuestion]?.subtitle}</p>
-          <img src={questions[currentQuestion]?.imageSrc} alt={questions[currentQuestion]?.title} className="question-image" />
-          {questions[currentQuestion]?.options ? (
-            <div className="options">
-              {questions[currentQuestion]?.options?.map((option, index) => (
-                <label key={index}>
-                  <input
-                    type="radio"
-                    name={`question-${currentQuestion}`}
-                    value={index}
-                    checked={answers[currentQuestion] === index}
-                    onChange={() => handleValueChange(currentQuestion, index)}
-                  />
-                  {option}
-                </label>
-              ))}
+          <div className="quiz-container">
+            <h2>{questions[currentQuestion]?.title}</h2>
+            <p>{questions[currentQuestion]?.subtitle}</p>
+            <img src={questions[currentQuestion]?.imageSrc} alt={questions[currentQuestion]?.title} className="question-image" />
+            {questions[currentQuestion]?.options ? (
+              <div className="options">
+                {questions[currentQuestion]?.options?.map((option, index) => (
+                  <label key={index}>
+                    <input
+                      type="radio"
+                      name={`question-${currentQuestion}`}
+                      value={index}
+                      checked={answers[currentQuestion] === index}
+                      onChange={() => handleValueChange(currentQuestion, index)}
+                    />
+                    {option}
+                  </label>
+                ))}
+              </div>
+            ) : (
+              <input
+                type="range"
+                value={answers[currentQuestion]}
+                min={questions[currentQuestion]?.min}
+                max={questions[currentQuestion]?.max}
+                step={questions[currentQuestion]?.step}
+                onChange={(e) => handleValueChange(currentQuestion, Number(e.target.value))}
+                className="range-slider"
+              />
+            )}
+            <p>
+              {answers[currentQuestion]} {questions[currentQuestion]?.unit}
+            </p>
+            <div className="navigation-buttons">
+              <button onClick={handlePrevious}>&lt;</button>
+              <button onClick={handleNext}>&gt;</button>
             </div>
-          ) : (
-            <input
-              type="range"
-              value={answers[currentQuestion]}
-              min={questions[currentQuestion]?.min}
-              max={questions[currentQuestion]?.max}
-              step={questions[currentQuestion]?.step}
-              onChange={(e) => handleValueChange(currentQuestion, Number(e.target.value))}
-              className="range-slider"
-            />
-          )}
-          <p>
-            {answers[currentQuestion]} {questions[currentQuestion]?.unit}
-          </p>
-          <div className="navigation-buttons">
-            <button onClick={handlePrevious}>&lt;</button>
-            <button onClick={handleNext}>&gt;</button>
-          </div>
-          <div className="progress-bar">
-            <div
-              className="progress"
-              style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-            ></div>
+            <div className="progress-bar">
+              <div
+                className="progress"
+                style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+              ></div>
+            </div>
           </div>
         </>
       )}
