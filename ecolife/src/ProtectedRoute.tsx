@@ -8,7 +8,11 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, ...rest }) => {
-  const { currentUser } = useAuth();
+  const { currentUser, loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>; // You can replace this with a proper loading indicator
+  }
 
   return currentUser ? <Component {...rest} /> : <Navigate to="/login" />;
 };

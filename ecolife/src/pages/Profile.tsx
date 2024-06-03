@@ -6,6 +6,8 @@ import { useAuth } from '../AuthContext';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // This imports and registers the required Chart.js components
 import './Profile.css';
+import './Navbar.css'; 
+
 
 const Profile: React.FC = () => {
   const { currentUser } = useAuth();
@@ -97,6 +99,15 @@ const Profile: React.FC = () => {
 
   return (
     <div className="profile-container">
+      <nav className="navbar">
+        <ul className="navbar-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/profile">Tracking</a></li>
+          <li><a href="/shop">Shop</a></li>
+          <li><a href="/articles">Articles</a></li>
+          <li><a href="/quiz">Quiz</a></li>
+        </ul>
+      </nav>
       <h1>Profile</h1>
       {isEditing ? (
         <div>
@@ -133,7 +144,7 @@ const Profile: React.FC = () => {
           <button onClick={handleDelete}>Delete</button>
         </div>
       )}
-      <h2></h2>
+      <h2>Quiz Results</h2>
       {results.length > 0 ? (
         <Line data={data} />
       ) : (
