@@ -7,7 +7,7 @@ const Tracking: React.FC = () => {
   const navigate = useNavigate();
 
   const handleFootClick = () => {
-    navigate('/calculator'); // Update with your calculator page path
+    navigate('/quiz'); // Update with your quiz page path
   };
 
   return (
@@ -20,7 +20,6 @@ const Tracking: React.FC = () => {
         </button>
       </div>
     </div>
-    
   );
 };
 

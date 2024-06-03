@@ -1,0 +1,41 @@
+/* src/components/Quiz.css */
+.quiz-container {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .question-image {
+    width: 200px;
+    margin: 20px 0;
+  }
+  
+  .range-slider {
+    width: 80%;
+    margin: 20px 0;
+  }
+  
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    background: #eee;
+    height: 10px;
+    border-radius: 5px;
+    margin: 20px 0;
+  }
+  
+  .progress {
+    height: 100%;
+    background: orange;
+    border-radius: 5px;
+  }
+  
