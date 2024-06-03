@@ -133,7 +133,7 @@ const Profile: React.FC = () => {
           <button onClick={handleDelete}>Delete</button>
         </div>
       )}
-      <h2>Quiz Results</h2>
+      <h2></h2>
       {results.length > 0 ? (
         <Line data={data} />
       ) : (
