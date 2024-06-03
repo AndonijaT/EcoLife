@@ -3,6 +3,7 @@ import { useAuth } from '../../AuthContext';
 import { db } from '../../firebaseConfig'; 
 import { collection, addDoc, Timestamp } from 'firebase/firestore'; 
 import './Quiz.css';
+import './../Navbar.css'
 
 const Quiz: React.FC = () => {
   const { currentUser } = useAuth();
@@ -288,9 +289,20 @@ const Quiz: React.FC = () => {
       console.error("No current user authenticated!");
     }
   };
-
+  
+     
+  
   return (
     <div className="quiz-container">
+      <nav className="navbar">
+        <ul className="navbar-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/profile">Tracking</a></li>
+          <li><a href="/shop">Shop</a></li>
+          <li><a href="/articles">Articles</a></li>
+          <li><a href="/profile">Profile</a></li>
+        </ul>
+      </nav>
       {showSummary ? (
         <div className="summary">
           <h2>Summary</h2>
