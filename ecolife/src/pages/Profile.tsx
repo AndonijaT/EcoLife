@@ -102,7 +102,7 @@ const Profile: React.FC = () => {
       <nav className="navbar">
         <ul className="navbar-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/profile">Tracking</a></li>
+          <li><a href="/tracking">Tracking</a></li>
           <li><a href="/shop">Shop</a></li>
           <li><a href="/articles">Articles</a></li>
           <li><a href="/quiz">Quiz</a></li>
