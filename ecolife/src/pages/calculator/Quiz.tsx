@@ -345,9 +345,10 @@ const Quiz: React.FC = () => {
               {answers[currentQuestion]} {questions[currentQuestion]?.unit}
             </p>
             <div className="navigation-buttons">
-              <button onClick={handlePrevious}>&lt;</button>
-              <button onClick={handleNext}>&gt;</button>
-            </div>
+  <button className="nav-button left" onClick={handlePrevious}>&lt;</button>
+  <button className="nav-button right" onClick={handleNext}>&gt;</button>
+</div>
+
             <div className="progress-bar">
               <div
                 className="progress"

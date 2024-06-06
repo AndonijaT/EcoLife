@@ -34,6 +34,39 @@
   margin: 20px 0;
 }
 
+/* Common styles for nav-buttons */
+.nav-button {
+  background-color: rgba(0, 0, 0, 0.1); /* Light gray background */
+  border: none;
+  color: black;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  position: fixed; /* Position fixed for outside card */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10; /* Ensure it appears above other elements */
+}
+
+.nav-button.left {
+  left: 20px; /* Positioning for left button */
+}
+
+.nav-button.right {
+  right: 20px; /* Positioning for right button */
+}
+
+.nav-button:hover {
+  transform: translateY(-50%) scale(1.2); /* Increase size on hover */
+  background-color: rgba(0, 0, 0, 0.2); /* Slightly darker background on hover */
+}
+
 .progress-bar {
   width: 100%;
   background: #eee;

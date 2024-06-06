@@ -446,3 +446,9 @@ blockquote {
 .footer .text-light {
   text-decoration: none;
 }
+
+/* Hide scrollbar */
+
+body::-webkit-scrollbar {
+  display: none;
+}
