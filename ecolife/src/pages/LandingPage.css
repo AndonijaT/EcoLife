@@ -452,3 +452,14 @@ blockquote {
 body::-webkit-scrollbar {
   display: none;
 }
+
+.custom-prev, .custom-next {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.custom-prev:hover, .custom-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}

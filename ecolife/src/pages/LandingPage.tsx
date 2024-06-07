@@ -13,8 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NewsletterForm from './../NewsletterForm'; // Import the component
 import { SocialIcon } from 'react-social-icons'
 import Leaderboard from '../Leaderboard';
-
-
+import Carousel from 'react-bootstrap/Carousel';
 
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -32,13 +31,6 @@ const LandingPage: React.FC = () => {
     fetchTestimonials();
   }, []);
 
-  const nextTestimonial = () => {
-    setCurrentTestimonial((currentTestimonial + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length);
-  };
   const handleServiceClick = (path: string) => {
     if (!currentUser) {
       toast.error('You need to log in first');
@@ -46,7 +38,6 @@ const LandingPage: React.FC = () => {
       navigate(path);
     }
   };
-
 
   const handleLogout = async () => {
     try {
@@ -65,12 +56,9 @@ const LandingPage: React.FC = () => {
     }
   };
 
-
   return (
-
     <div className="landing-page">
       <nav className="navigation">
-
         {currentUser ? (
           <>
             <div className="link">
@@ -98,7 +86,6 @@ const LandingPage: React.FC = () => {
               </Link>
             </div>
             <button className="logout-button" onClick={handleLogout}>Logout</button>
-
           </>
         ) : (
           <div className="link">
@@ -141,37 +128,40 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-
         <section className="newsletter">
           <NewsletterForm /> {/* Add this line to include the form */}
         </section>
 
-
+     
         <section className="testimonials-carousel">
           <h2>Clients Talk</h2>
-          <div className="testimonial-card">
-            {testimonials.length > 0 ? (
-              <div className="testimonial-content">
-                <div className="testimonial-text">
-                  <h3>{testimonials[currentTestimonial].userName}</h3>
-                  <p className="text">{testimonials[currentTestimonial].text}</p>
+          <Carousel
+            indicators={false}
+            interval={null}
+            prevIcon={<span className="carousel-control-prev-icon custom-prev" />}
+            nextIcon={<span className="carousel-control-next-icon custom-next" />}
+          >
+            {testimonials.slice(0, Math.ceil(testimonials.length / 3)).map((_, index) => (
+              <Carousel.Item key={index}>
+                <div className="testimonial-cards">
+                  {testimonials.slice(index * 3, index * 3 + 3).map((testimonial, subIndex) => (
+                    <div className="testimonial-card" key={subIndex}>
+                      <div className="testimonial-content">
+                        <div className="testimonial-text">
+                          <h3>{testimonial.userName}</h3>
+                          <p className="text">{testimonial.text}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ) : (
-              <p>No testimonials available</p>
-            )}
-            <div className="testimonial-navigation">
-              <button onClick={prevTestimonial}>←</button>
-              <button onClick={nextTestimonial}>→</button>
-
-            </div>
-            <button className="add-testimonial-btn" onClick={handleAddTestimonial}>+</button>
-
-          </div>
-
+              </Carousel.Item>
+            ))}
+          </Carousel>
+          <button className="add-testimonial-btn" onClick={handleAddTestimonial}>+</button>
         </section>
 
-        <section className="leaderboard-section"> {/* Add this section for the leaderboard */}
+        <section className="leaderboard-section">
           <Leaderboard />
         </section>
         <footer className="footer bg-dark text-light py-5">
