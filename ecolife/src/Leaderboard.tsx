@@ -65,7 +65,7 @@ const Leaderboard: React.FC = () => {
           <div key={index} className={`podium-item position-${index + 1}`}>
             <div className="podium-rank">{index + 1}</div>
             {result.userPicture && <img src={result.userPicture} alt={result.userName} className="podium-picture" />}
-            <div className="podium-user">User: {result.userName}</div>
+            <div className="podium-user"> {result.userName}</div>
             <div className="podium-score">Score: {result.score}</div>
           </div>
         ))}

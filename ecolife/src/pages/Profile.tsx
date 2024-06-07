@@ -7,6 +7,8 @@ import 'chart.js/auto'; // This imports and registers the required Chart.js comp
 import './Profile.css';
 import './Navbar.css'; 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
 
 const Profile: React.FC = () => {
   const { currentUser } = useAuth();
@@ -57,23 +59,38 @@ const Profile: React.FC = () => {
     }
   };
 
+  const uploadProfilePicture = async () => {
+    if (file && currentUser) {
+      const storageRef = ref(storage, `profilePictures/${currentUser.uid}`);
+      await uploadBytes(storageRef, file);
+      return await getDownloadURL(storageRef);
+    }
+    return profile.picture; // Return the existing picture URL if no new file is uploaded
+  };
+
   const handleSave = async () => {
     if (currentUser) {
+      const pictureUrl = await uploadProfilePicture();
+      const updatedProfile = { ...profile, picture: pictureUrl };
       const profileDoc = doc(db, 'profiles', currentUser.uid);
-      await setDoc(profileDoc, profile);
+      await setDoc(profileDoc, updatedProfile);
+      setProfile(updatedProfile);
       setIsEditing(false);
     }
   };
 
   const handleUpdate = async () => {
     if (currentUser) {
+      const pictureUrl = await uploadProfilePicture();
+      const updatedProfile = { ...profile, picture: pictureUrl };
       const profileDoc = doc(db, 'profiles', currentUser.uid);
       const profileSnapshot = await getDoc(profileDoc);
       if (profileSnapshot.exists()) {
-        await updateDoc(profileDoc, profile);
+        await updateDoc(profileDoc, updatedProfile);
       } else {
-        await setDoc(profileDoc, profile);
+        await setDoc(profileDoc, updatedProfile);
       }
+      setProfile(updatedProfile);
       setIsEditing(false);
     }
   };
@@ -86,14 +103,12 @@ const Profile: React.FC = () => {
     }
   };
 
-  const handleUpload = async () => {
-    if (file && currentUser) {
-      const storageRef = ref(storage, `profilePictures/${currentUser.uid}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      const profileDoc = doc(db, 'profiles', currentUser.uid);
-      await updateDoc(profileDoc, { picture: url });
-      setProfile((prevState) => ({ ...prevState, picture: url }));
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      window.location.href = '/login'; // Redirect to login page after logout
+    } catch (error) {
+      console.error("Error logging out:", error);
     }
   };
 
@@ -123,6 +138,7 @@ const Profile: React.FC = () => {
           <li><a href="/shop">Shop</a></li>
           <li><a href="/articles">Articles</a></li>
           <li><a href="/quiz">Quiz</a></li>
+          <li><button onClick={handleLogout} className="logout-button">Logout</button></li>
         </ul>
       </nav>
       <h1>Profile</h1>
@@ -150,7 +166,6 @@ const Profile: React.FC = () => {
             placeholder="Phone"
           />
           <input type="file" onChange={handleFileChange} />
-          <button onClick={handleUpload}>Upload Profile Picture</button>
           <button onClick={handleSave}>Save</button>
           <button onClick={handleUpdate}>Update</button>
         </div>
@@ -175,4 +190,3 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-
