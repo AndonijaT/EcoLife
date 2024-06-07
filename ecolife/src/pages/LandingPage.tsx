@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NewsletterForm from './../NewsletterForm'; // Import the component
 import { SocialIcon } from 'react-social-icons'
+import Leaderboard from '../Leaderboard';
 
 
 
@@ -170,6 +171,9 @@ const LandingPage: React.FC = () => {
 
         </section>
 
+        <section className="leaderboard-section"> {/* Add this section for the leaderboard */}
+          <Leaderboard />
+        </section>
         <footer className="footer bg-dark text-light py-5">
           <div className="container">
             <div className="row justify-content-center text-center">

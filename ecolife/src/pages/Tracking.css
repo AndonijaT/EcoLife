@@ -16,18 +16,26 @@
 
 .tracking-content {
   background: rgba(31, 68, 35, 0.5); /* Add a semi-transparent background */
-  padding: 10px;
+  padding: 20px;
   border-radius: 20px;
+  width: 300px; /* Fixed width for consistency */
+  height: 400px; /* Fixed height for consistency */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .tracking-content h1 {
-  font-size: 3rem;
+  font-size: 1.5rem; /* Adjust font size for better fit */
   margin-bottom: 1rem;
 }
 
 .tracking-content p {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1rem; /* Adjust font size for better fit */
+  margin-bottom: 1.5rem;
 }
 
 .tracking-content .foot-button {
