@@ -1,9 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './Shop.css';
 import VideoBackground from '../VideoBackground';
+import { SocialIcon } from 'react-social-icons'
 
-const Shop = () => {
+
+interface Product {
+  title: string;
+  link: string;
+  image: string;
+  price: string;
+}
+
+const Shop: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get<Product[]>('http://localhost:3001/api/products');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Get current products
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="landing-page">
@@ -33,36 +67,45 @@ const Shop = () => {
           </Link>
         </div>
       </nav>
-      <VideoBackground videoSrc="/assets/video-shop.mp4" overlayText=" Shop " />
-      <main>
-        
-       
-
-       
-
-       
-
-        <footer className="footer">
-          <div className="footer-container">
-  
-            <div className="footer-section">
-              <h3>Support ECOLIFE</h3>
-              <p>Donate today: 100% of your donation goes directly toward us</p>
-              <button className="footer-donate">Donate</button>
+      <VideoBackground videoSrc="/assets/background-shop.mp4" overlayText="Shop" />
+       <main>
+        <div className="shop-products">
+          {currentProducts.map((product, index) => (
+            <div key={index} className="product-card">
+              <a href={product.link} target="_blank" rel="noopener noreferrer">
+                <img src={product.image} alt={product.title} />
+                <h3>{product.title}</h3>
+                <p>{product.price}</p>
+              </a>
             </div>
-            
-            <div className="footer-section">
-              <h3>Connect</h3>
-              <p>Email Us</p>
-              <p>Call Us</p>
-              <div className="footer-social">
-                <a href="#"><img src="/assets/li.png" alt="LinkedIn" /></a>
-                <a href="#"><img src="/assets/twitter.png" alt="Twitter" /></a>
+          ))}
+        </div>
+        <div className="pagination">
+          <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} className="pagination-btn">
+            &lt;
+          </button>
+          <button onClick={() => paginate(currentPage + 1)} disabled={indexOfLastProduct >= products.length} className="pagination-btn">
+            &gt;
+          </button>
+        </div>
+        <br />
+        <footer className="footer bg-dark text-light py-5">
+          <div className="container">
+            <div className="row justify-content-center text-center">
+              <div className="col-md-4">
+                <h5>Contact Us</h5>
+                <p><a href="mailto:lifeeco18@yahoo.com" className="text-light">Email Us</a></p>
+                <p><a href="tel:+123456789" className="text-light">Call Us</a></p>
+              </div>
+              <div className="col-md-4">
+                <h5>Connect</h5>
+                <div className="d-flex justify-content-center">
+                  <SocialIcon url="https://www.linkedin.com/in/eco-life-bbb50b311/" className="me-3" />
+                  <SocialIcon url="https://www.twitter.com" />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="footer-bottom">
-            <p>Copyright © 2023. All Rights Reserved. </p>
+            <p className="mb-0 text-center">Copyright © 2024. All Rights Reserved.</p>
           </div>
         </footer>
       </main>
