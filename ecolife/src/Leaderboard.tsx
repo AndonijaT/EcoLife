@@ -8,6 +8,7 @@ interface QuizResult {
   userId: string;
   score: number;
   userName?: string; // Optional userName field
+  userPicture?: string; // Optional userPicture field
 }
 
 const Leaderboard: React.FC = () => {
@@ -32,13 +33,14 @@ const Leaderboard: React.FC = () => {
 
       const latestScoresArray = Object.values(latestScores).sort((a, b) => b.score - a.score).slice(0, 10);
 
-      // Fetch user names for the top scores
-      const leaderboardWithNames = await Promise.all(latestScoresArray.map(async (result) => {
+      // Fetch user names and profile pictures for the top scores
+      const leaderboardWithNamesAndPictures = await Promise.all(latestScoresArray.map(async (result) => {
         try {
           const userDocRef = doc(db, 'profiles', result.userId);
           const userDoc = await getDoc(userDocRef);
           if (userDoc.exists()) {
             result.userName = userDoc.data().name;
+            result.userPicture = userDoc.data().picture;
           } else {
             result.userName = result.userId; // Fallback to userId if name is not found
           }
@@ -49,7 +51,7 @@ const Leaderboard: React.FC = () => {
         return result;
       }));
 
-      setLeaderboard(leaderboardWithNames);
+      setLeaderboard(leaderboardWithNamesAndPictures);
     };
 
     fetchLeaderboard();
@@ -62,6 +64,7 @@ const Leaderboard: React.FC = () => {
         {leaderboard.slice(0, 3).map((result, index) => (
           <div key={index} className={`podium-item position-${index + 1}`}>
             <div className="podium-rank">{index + 1}</div>
+            {result.userPicture && <img src={result.userPicture} alt={result.userName} className="podium-picture" />}
             <div className="podium-user">User: {result.userName}</div>
             <div className="podium-score">Score: {result.score}</div>
           </div>
@@ -70,6 +73,7 @@ const Leaderboard: React.FC = () => {
       <ol className="leaderboard-list">
         {leaderboard.slice(3).map((result, index) => (
           <li key={index + 3}>
+            {result.userPicture && <img src={result.userPicture} alt={result.userName} className="leaderboard-picture" />}
             User: {result.userName} - Score: {result.score}
           </li>
         ))}

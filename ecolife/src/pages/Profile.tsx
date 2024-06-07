@@ -1,20 +1,20 @@
-// src/pages/Profile.tsx
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, setDoc, updateDoc, deleteDoc, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
-import { db } from '../firebaseConfig';  // Ensure the db import is correct
+import { db, storage } from '../firebaseConfig'; // Ensure the db and storage imports are correct
 import { useAuth } from '../AuthContext';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // This imports and registers the required Chart.js components
 import './Profile.css';
 import './Navbar.css'; 
-
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const Profile: React.FC = () => {
   const { currentUser } = useAuth();
-  const [profile, setProfile] = useState({ name: '', email: '', phone: '' });
+  const [profile, setProfile] = useState({ name: '', email: '', phone: '', picture: '' });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState<any[]>([]);
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
         const profileDoc = doc(db, 'profiles', currentUser.uid);
         const profileSnapshot = await getDoc(profileDoc);
         if (profileSnapshot.exists()) {
-          setProfile(profileSnapshot.data() as { name: string, email: string, phone: string });
+          setProfile(profileSnapshot.data() as { name: string, email: string, phone: string, picture: string });
         }
         setIsLoading(false);
       }
@@ -51,6 +51,12 @@ const Profile: React.FC = () => {
     setProfile((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
+
   const handleSave = async () => {
     if (currentUser) {
       const profileDoc = doc(db, 'profiles', currentUser.uid);
@@ -76,7 +82,18 @@ const Profile: React.FC = () => {
     if (currentUser) {
       const profileDoc = doc(db, 'profiles', currentUser.uid);
       await deleteDoc(profileDoc);
-      setProfile({ name: '', email: '', phone: '' });
+      setProfile({ name: '', email: '', phone: '', picture: '' });
+    }
+  };
+
+  const handleUpload = async () => {
+    if (file && currentUser) {
+      const storageRef = ref(storage, `profilePictures/${currentUser.uid}`);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      const profileDoc = doc(db, 'profiles', currentUser.uid);
+      await updateDoc(profileDoc, { picture: url });
+      setProfile((prevState) => ({ ...prevState, picture: url }));
     }
   };
 
@@ -132,11 +149,14 @@ const Profile: React.FC = () => {
             onChange={handleChange}
             placeholder="Phone"
           />
+          <input type="file" onChange={handleFileChange} />
+          <button onClick={handleUpload}>Upload Profile Picture</button>
           <button onClick={handleSave}>Save</button>
           <button onClick={handleUpdate}>Update</button>
         </div>
       ) : (
         <div>
+          {profile.picture && <img src={profile.picture} alt="Profile" className="profile-pic" />}
           <p>Name: {profile.name}</p>
           <p>Email: {profile.email}</p>
           <p>Phone: {profile.phone}</p>
@@ -155,3 +175,4 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
