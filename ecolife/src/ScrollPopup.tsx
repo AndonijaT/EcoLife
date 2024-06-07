@@ -4,10 +4,11 @@ import './ScrollPopup.css';
 
 const ScrollPopup: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [isClosed, setIsClosed] = useState(false); // State to track if the popup has been closed
   const navigate = useNavigate();
 
   const handleScroll = () => {
-    if (window.scrollY > 200) { // Adjust the scroll value as needed
+    if (!isClosed && window.scrollY > 200) { // Only show if not closed
       setShowPopup(true);
     } else {
       setShowPopup(false);
@@ -19,22 +20,23 @@ const ScrollPopup: React.FC = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [isClosed]);
 
   const handleClick = () => {
     navigate('/tracking'); // Update with your tracking page path
   };
 
   const handleClose = () => {
+    setIsClosed(true);
     setShowPopup(false);
   };
 
   return (
-    showPopup ? (
+    showPopup && !isClosed ? (
       <div className="scroll-popup">
         <button className="close-button" onClick={handleClose}>×</button>
-        <p>How sustainable are you? Find out today!</p>
-        <button onClick={handleClick}>Visit our tracking page</button>
+        <p>Want to find out how sustainable you are?</p>
+        <button onClick={handleClick} className="popup-button">Visit our tracking page</button>
       </div>
     ) : null
   );
