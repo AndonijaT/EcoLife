@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './LandingPage.css';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 import VideoBackground from '../VideoBackground';
 import { useAuth } from '../AuthContext';
 import { signOut } from 'firebase/auth';
@@ -22,11 +22,18 @@ const LandingPage: React.FC = () => {
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchTestimonials = async () => {
-      const querySnapshot = await getDocs(collection(db, 'testimonials'));
-      const testimonialsData = querySnapshot.docs.map(doc => doc.data());
-      setTestimonials(testimonialsData);
+      const testimonialsSnapshot = await getDocs(collection(db, 'testimonials'));
+      const testimonialsData = testimonialsSnapshot.docs.map(doc => doc.data());
+
+      const testimonialsWithUsernames = await Promise.all(testimonialsData.map(async (testimonial) => {
+        const userDoc = await getDoc(doc(db, 'profiles', testimonial.userId));
+        const userName = userDoc.exists() ? userDoc.data().name : 'Unknown User';
+        return { ...testimonial, userName };
+      }));
+
+      setTestimonials(testimonialsWithUsernames);
     };
 
     fetchTestimonials();
@@ -68,7 +75,7 @@ const LandingPage: React.FC = () => {
                 <span className="text">Articles</span>
               </Link>
             </div>
-            <div className="link">
+            <div className="link" >
               <Link to="/shop">
                 <img src="/assets/shop.svg" alt="Shop" />
                 <span className="text">Shop</span>
@@ -141,19 +148,15 @@ const LandingPage: React.FC = () => {
             prevIcon={<span className="carousel-control-prev-icon custom-prev" />}
             nextIcon={<span className="carousel-control-next-icon custom-next" />}
           >
-            {testimonials.slice(0, Math.ceil(testimonials.length / 3)).map((_, index) => (
+            {testimonials.map((testimonial, index) => (
               <Carousel.Item key={index}>
-                <div className="testimonial-cards">
-                  {testimonials.slice(index * 3, index * 3 + 3).map((testimonial, subIndex) => (
-                    <div className="testimonial-card" key={subIndex}>
-                      <div className="testimonial-content">
-                        <div className="testimonial-text">
-                          <h3>{testimonial.userName}</h3>
-                          <p className="text">{testimonial.text}</p>
-                        </div>
-                      </div>
+                <div className="testimonial-card">
+                  <div className="testimonial-content">
+                    <div className="testimonial-text">
+                      <h3>{testimonial.userName}</h3>
+                      <p className="text">{testimonial.text}</p>
                     </div>
-                  ))}
+                  </div>
                 </div>
               </Carousel.Item>
             ))}

@@ -463,3 +463,12 @@ body::-webkit-scrollbar {
 .custom-prev:hover, .custom-next:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
+
+/* src/pages/LandingPage.css */
+.link {
+  position: relative; /* Make sure the parent link is positioned relatively */
+}
+
+.link:hover .shop-notification {
+  visibility: visible; /* Show the notification on hover */
+}
