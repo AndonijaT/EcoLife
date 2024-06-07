@@ -31,7 +31,7 @@ const Leaderboard: React.FC = () => {
         }
       });
 
-      const latestScoresArray = Object.values(latestScores).sort((a, b) => b.score - a.score).slice(0, 10);
+      const latestScoresArray = Object.values(latestScores).sort((a, b) => b.score - a.score).slice(0, 3);
 
       // Fetch user names and profile pictures for the top scores
       const leaderboardWithNamesAndPictures = await Promise.all(latestScoresArray.map(async (result) => {
@@ -61,23 +61,15 @@ const Leaderboard: React.FC = () => {
     <div className="leaderboard">
       <h2>Leaderboard</h2>
       <div className="podium">
-        {leaderboard.slice(0, 3).map((result, index) => (
+        {leaderboard.map((result, index) => (
           <div key={index} className={`podium-item position-${index + 1}`}>
             <div className="podium-rank">{index + 1}</div>
             {result.userPicture && <img src={result.userPicture} alt={result.userName} className="podium-picture" />}
-            <div className="podium-user"> {result.userName}</div>
+            <div className="podium-user">{result.userName}</div>
             <div className="podium-score">Score: {result.score}</div>
           </div>
         ))}
       </div>
-      <ol className="leaderboard-list">
-        {leaderboard.slice(3).map((result, index) => (
-          <li key={index + 3}>
-            {result.userPicture && <img src={result.userPicture} alt={result.userName} className="leaderboard-picture" />}
-            User: {result.userName} - Score: {result.score}
-          </li>
-        ))}
-      </ol>
     </div>
   );
 };

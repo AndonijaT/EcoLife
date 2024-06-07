@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc, setDoc, updateDoc, deleteDoc, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, deleteDoc, collection, query, where, getDocs, orderBy, onSnapshot } from 'firebase/firestore';
 import { db, storage } from '../firebaseConfig'; // Ensure the db and storage imports are correct
 import { useAuth } from '../AuthContext';
 import { Line } from 'react-chartjs-2';
@@ -17,19 +17,24 @@ const Profile: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState<any[]>([]);
   const [file, setFile] = useState<File | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (currentUser) {
-        const profileDoc = doc(db, 'profiles', currentUser.uid);
-        const profileSnapshot = await getDoc(profileDoc);
-        if (profileSnapshot.exists()) {
-          setProfile(profileSnapshot.data() as { name: string, email: string, phone: string, picture: string });
+    if (currentUser) {
+      const profileDocRef = doc(db, 'profiles', currentUser.uid);
+      const unsubscribe = onSnapshot(profileDocRef, (doc) => {
+        if (doc.exists()) {
+          const data = doc.data() as { name: string, email: string, phone: string, picture: string };
+          setProfile(data);
+          setShowPopup(!data.name || !data.email || !data.phone);
+        } else {
+          setShowPopup(true);
         }
         setIsLoading(false);
-      }
-    };
-    fetchProfile();
+      });
+
+      return () => unsubscribe();
+    }
   }, [currentUser]);
 
   useEffect(() => {
@@ -84,12 +89,7 @@ const Profile: React.FC = () => {
       const pictureUrl = await uploadProfilePicture();
       const updatedProfile = { ...profile, picture: pictureUrl };
       const profileDoc = doc(db, 'profiles', currentUser.uid);
-      const profileSnapshot = await getDoc(profileDoc);
-      if (profileSnapshot.exists()) {
-        await updateDoc(profileDoc, updatedProfile);
-      } else {
-        await setDoc(profileDoc, updatedProfile);
-      }
+      await updateDoc(profileDoc, updatedProfile);
       setProfile(updatedProfile);
       setIsEditing(false);
     }
@@ -184,6 +184,15 @@ const Profile: React.FC = () => {
         <Line data={data} />
       ) : (
         <p>No quiz results available.</p>
+      )}
+
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-inner">
+            <h2>Please fill in the missing data</h2>
+            <button onClick={() => setShowPopup(false)}>Close</button>
+          </div>
+        </div>
       )}
     </div>
   );
