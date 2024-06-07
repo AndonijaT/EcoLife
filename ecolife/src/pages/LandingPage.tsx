@@ -13,11 +13,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import NewsletterForm from './../NewsletterForm'; // Import the component
 import { SocialIcon } from 'react-social-icons'
 import Leaderboard from '../Leaderboard';
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from 'react-bootstrap/Carousel'; // Correct import
+import ScrollPopup from './../ScrollPopup'; // Import the ScrollPopup component
 
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const { currentUser } = useAuth(); // Ensure this line is included to get the current user
+  const { currentUser } = useAuth();
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const navigate = useNavigate();
 
@@ -129,10 +130,9 @@ const LandingPage: React.FC = () => {
         </section>
 
         <section className="newsletter">
-          <NewsletterForm /> {/* Add this line to include the form */}
+          <NewsletterForm />
         </section>
 
-     
         <section className="testimonials-carousel">
           <h2>Clients Talk</h2>
           <Carousel
@@ -184,6 +184,7 @@ const LandingPage: React.FC = () => {
           </div>
         </footer>
       </main>
+      <ScrollPopup /> {/* Add the ScrollPopup component here */}
       <ToastContainer />
     </div>
   );
