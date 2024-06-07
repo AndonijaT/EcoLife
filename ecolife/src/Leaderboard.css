@@ -1,71 +1,90 @@
 .leaderboard {
-    background: rgb(21, 109, 133);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    margin: 20px 0;
+  background: rgb(27, 136, 166);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px 0;
 }
 
 .leaderboard h2 {
     margin-bottom: 1rem;
-}
-
-.podium {
+  }
+  
+  .podium {
     display: flex;
+    align-items: flex-end; /* Align items to the bottom */
     justify-content: center;
-    align-items: flex-end;
-    margin-bottom: 20px;
-}
-
-.podium-item {
+    margin-bottom: 2rem;
+  }
+  
+  .podium-item {
     margin: 0 10px;
-    padding: 10px;
+    padding: 20px;
     border-radius: 10px;
     text-align: center;
+    background: #f0f0f0;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-}
-
-.position-1 {
-    height: 200px;
-    width: 150px;
-    background-color: #f1c40f;
-}
-
-.position-2 {
-    height: 180px;
-    width: 130px;
-    background-color: #c0c0c0;
-}
-
-.position-3 {
-    height: 160px;
-    width: 110px;
-    background-color: #cd7f32;
-}
-
-.podium-rank {
+    justify-content: flex-end; /* Ensure content is at the bottom */
+  }
+  
+  .podium-item.position-1 {
+    width: 200px;
+    height: 300px; /* Tallest for first place */
+    background-color: gold;
+  }
+  
+  .podium-item.position-2 {
+    width: 180px;
+    height: 250px; /* Medium for second place */
+    background-color: silver;
+  }
+  
+  .podium-item.position-3 {
+    width: 160px;
+    height: 220px; /* Shortest for third place */
+    background-color: #cd7f32; /* Bronze */
+  }
+  
+  .podium-rank {
     position: absolute;
-    top: -20px;
+    top: 10px; /* Positioning the rank number at the top */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 24px;
+    font-size: 2rem;
     font-weight: bold;
-}
-
-.podium-user, .podium-score {
-    margin-top: 10px;
-    word-wrap: break-word;
-}
-
-.leaderboard-list {
-    list-style-type: decimal;
+    margin: 0; /* Remove default margin */
+    z-index: 1; /* Ensure rank number is above other content */
+  }
+  
+  .podium-user,
+  .podium-score {
+    margin: 10px 0;
+    word-wrap: break-word; /* Ensure text wraps within the box */
+  }
+  
+  .podium-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 10px auto; /* Center the picture horizontally */
+  }
+  
+  .leaderboard-list {
+    list-style-type: none;
     padding: 0;
-    text-align: left;
-}
-
-.leaderboard-list li {
+  }
+  
+  .leaderboard-list li {
     margin: 0.5rem 0;
-}
+    display: flex;
+    align-items: center;
+  }
+  
+  .leaderboard-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
