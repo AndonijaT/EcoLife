@@ -11,6 +11,11 @@ const Quiz: React.FC = () => {
   const [answers, setAnswers] = useState(Array(12).fill(0)); 
   const [finalScore, setFinalScore] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // State to control the mobile menu
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   const emojis = [
     '😢', // 1
@@ -295,9 +300,12 @@ const Quiz: React.FC = () => {
   return (
     <div className="quiz-container">
       <nav className="navbar">
-        <ul className="navbar-links">
+        <button className="menu-toggle" onClick={toggleMenu}>
+          &#9776; {/* Hamburger icon */}
+        </button>
+        <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
           <li><a href="/">Home</a></li>
-          <li><a href="/profile">Tracking</a></li>
+          <li><a href="/tracking">Tracking</a></li>
           <li><a href="/shop">Shop</a></li>
           <li><a href="/articles">Articles</a></li>
           <li><a href="/profile">Profile</a></li>
@@ -345,10 +353,9 @@ const Quiz: React.FC = () => {
               {answers[currentQuestion]} {questions[currentQuestion]?.unit}
             </p>
             <div className="navigation-buttons">
-  <button className="nav-button left" onClick={handlePrevious}>&lt;</button>
-  <button className="nav-button right" onClick={handleNext}>&gt;</button>
-</div>
-
+              <button className="nav-button left" onClick={handlePrevious}>&lt;</button>
+              <button className="nav-button right" onClick={handleNext}>&gt;</button>
+            </div>
             <div className="progress-bar">
               <div
                 className="progress"

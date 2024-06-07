@@ -1,4 +1,4 @@
-/* src/components/Quiz.css */
+/* Base styles */
 .quiz-container {
   width: 100%;
   max-width: 800px;
@@ -28,13 +28,7 @@
   margin: 5px 0;
 }
 
-.navigation-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-}
-
-/* Common styles for nav-buttons */
+/* Navigation buttons */
 .nav-button {
   background-color: rgba(0, 0, 0, 0.1); /* Light gray background */
   border: none;
@@ -81,7 +75,6 @@
   border-radius: 5px;
 }
 
-/* src/pages/Quiz.css */
 .summary {
   text-align: center;
   margin-top: 50px;
@@ -95,4 +88,118 @@
 .summary p {
   font-size: 1.5em;
   margin: 10px 0;
+}
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #28a745;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-links li {
+  margin-left: 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: white;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .quiz-container {
+    padding: 10px;
+  }
+
+  .question-image {
+    width: 150px;
+    margin: 10px 0;
+  }
+
+  .range-slider {
+    width: 100%;
+  }
+
+  .nav-button {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+
+  .progress-bar {
+    height: 6px;
+  }
+
+  /* Hide the navbar links initially */
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #28a745;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-links li {
+    margin: 10px 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .quiz-container {
+    padding: 5px;
+  }
+
+  .question-image {
+    width: 120px;
+    margin: 5px 0;
+  }
+
+  .nav-button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+
+  .progress-bar {
+    height: 5px;
+  }
+
+  .summary h1 {
+    font-size: 1.2em;
+  }
+
+  .summary p {
+    font-size: 1em;
+  }
 }

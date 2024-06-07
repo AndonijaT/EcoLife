@@ -1,0 +1,71 @@
+.leaderboard {
+    background: rgb(21, 109, 133);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.leaderboard h2 {
+    margin-bottom: 1rem;
+}
+
+.podium {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.podium-item {
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.position-1 {
+    height: 200px;
+    width: 150px;
+    background-color: #f1c40f;
+}
+
+.position-2 {
+    height: 180px;
+    width: 130px;
+    background-color: #c0c0c0;
+}
+
+.position-3 {
+    height: 160px;
+    width: 110px;
+    background-color: #cd7f32;
+}
+
+.podium-rank {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.podium-user, .podium-score {
+    margin-top: 10px;
+    word-wrap: break-word;
+}
+
+.leaderboard-list {
+    list-style-type: decimal;
+    padding: 0;
+    text-align: left;
+}
+
+.leaderboard-list li {
+    margin: 0.5rem 0;
+}
