@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './LandingPage.css';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 import VideoBackground from '../VideoBackground';
 import { useAuth } from '../AuthContext';
 import { signOut } from 'firebase/auth';
@@ -12,32 +12,33 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NewsletterForm from './../NewsletterForm'; // Import the component
 import { SocialIcon } from 'react-social-icons'
-
-
+import Leaderboard from '../Leaderboard';
+import Carousel from 'react-bootstrap/Carousel'; // Correct import
+import ScrollPopup from './../ScrollPopup'; // Import the ScrollPopup component
 
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const { currentUser } = useAuth(); // Ensure this line is included to get the current user
+  const { currentUser } = useAuth();
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchTestimonials = async () => {
-      const querySnapshot = await getDocs(collection(db, 'testimonials'));
-      const testimonialsData = querySnapshot.docs.map(doc => doc.data());
-      setTestimonials(testimonialsData);
+      const testimonialsSnapshot = await getDocs(collection(db, 'testimonials'));
+      const testimonialsData = testimonialsSnapshot.docs.map(doc => doc.data());
+
+      const testimonialsWithUsernames = await Promise.all(testimonialsData.map(async (testimonial) => {
+        const userDoc = await getDoc(doc(db, 'profiles', testimonial.userId));
+        const userName = userDoc.exists() ? userDoc.data().name : 'Unknown User';
+        return { ...testimonial, userName };
+      }));
+
+      setTestimonials(testimonialsWithUsernames);
     };
 
     fetchTestimonials();
   }, []);
 
-  const nextTestimonial = () => {
-    setCurrentTestimonial((currentTestimonial + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length);
-  };
   const handleServiceClick = (path: string) => {
     if (!currentUser) {
       toast.error('You need to log in first');
@@ -45,7 +46,6 @@ const LandingPage: React.FC = () => {
       navigate(path);
     }
   };
-
 
   const handleLogout = async () => {
     try {
@@ -64,12 +64,9 @@ const LandingPage: React.FC = () => {
     }
   };
 
-
   return (
-
     <div className="landing-page">
       <nav className="navigation">
-
         {currentUser ? (
           <>
             <div className="link">
@@ -78,7 +75,7 @@ const LandingPage: React.FC = () => {
                 <span className="text">Articles</span>
               </Link>
             </div>
-            <div className="link">
+            <div className="link" >
               <Link to="/shop">
                 <img src="/assets/shop.svg" alt="Shop" />
                 <span className="text">Shop</span>
@@ -97,7 +94,6 @@ const LandingPage: React.FC = () => {
               </Link>
             </div>
             <button className="logout-button" onClick={handleLogout}>Logout</button>
-
           </>
         ) : (
           <div className="link">
@@ -140,36 +136,37 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-
         <section className="newsletter">
-          <NewsletterForm /> {/* Add this line to include the form */}
+          <NewsletterForm />
         </section>
-
 
         <section className="testimonials-carousel">
           <h2>Clients Talk</h2>
-          <div className="testimonial-card">
-            {testimonials.length > 0 ? (
-              <div className="testimonial-content">
-                <div className="testimonial-text">
-                  <h3>{testimonials[currentTestimonial].userName}</h3>
-                  <p className="text">{testimonials[currentTestimonial].text}</p>
+          <Carousel
+            indicators={false}
+            interval={null}
+            prevIcon={<span className="carousel-control-prev-icon custom-prev" />}
+            nextIcon={<span className="carousel-control-next-icon custom-next" />}
+          >
+            {testimonials.map((testimonial, index) => (
+              <Carousel.Item key={index}>
+                <div className="testimonial-card">
+                  <div className="testimonial-content">
+                    <div className="testimonial-text">
+                      <h3>{testimonial.userName}</h3>
+                      <p className="text">{testimonial.text}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <p>No testimonials available</p>
-            )}
-            <div className="testimonial-navigation">
-              <button onClick={prevTestimonial}>←</button>
-              <button onClick={nextTestimonial}>→</button>
-
-            </div>
-            <button className="add-testimonial-btn" onClick={handleAddTestimonial}>+</button>
-
-          </div>
-
+              </Carousel.Item>
+            ))}
+          </Carousel>
+          <button className="add-testimonial-btn" onClick={handleAddTestimonial}>+</button>
         </section>
 
+        <section className="leaderboard-section">
+          <Leaderboard />
+        </section>
         <footer className="footer bg-dark text-light py-5">
           <div className="container">
             <div className="row justify-content-center text-center">
@@ -190,6 +187,7 @@ const LandingPage: React.FC = () => {
           </div>
         </footer>
       </main>
+      <ScrollPopup /> {/* Add the ScrollPopup component here */}
       <ToastContainer />
     </div>
   );

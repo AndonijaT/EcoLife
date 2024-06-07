@@ -11,6 +11,11 @@ const Quiz: React.FC = () => {
   const [answers, setAnswers] = useState(Array(12).fill(0)); 
   const [finalScore, setFinalScore] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // State to control the mobile menu
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   const emojis = [
     '😢', // 1
@@ -41,7 +46,7 @@ const Quiz: React.FC = () => {
       id: 2,
       title: 'What is the average fuel economy of the vehicles you use most often?',
       subtitle: '',
-      imageSrc: '/assets/fuel.png',
+      imageSrc: '/assets/fuel.jpg',
       min: 1,
       max: 20,
       step: 1,
@@ -63,7 +68,7 @@ const Quiz: React.FC = () => {
       id: 4,
       title: 'How much of the food that you eat is unprocessed, unpackaged, or locally grown?',
       subtitle: '(less than 320 kilometers/200 miles away)',
-      imageSrc: '/assets/food-local.png',
+      imageSrc: '/assets/local-food.png',
       min: 0,
       max: 100,
       step: 1,
@@ -101,7 +106,7 @@ const Quiz: React.FC = () => {
       id: 7,
       title: 'How many people live in your household?',
       subtitle: '',
-      imageSrc: '/assets/household.png',
+      imageSrc: '/assets/household.jpg',
       min: 1,
       max: 10,
       step: 1,
@@ -112,7 +117,7 @@ const Quiz: React.FC = () => {
       id: 8,
       title: 'What is the size of your home?',
       subtitle: '',
-      imageSrc: '/assets/house-size.png',
+      imageSrc: '/assets/house.png',
       min: 0,
       max: 300,
       step: 10,
@@ -123,7 +128,7 @@ const Quiz: React.FC = () => {
       id: 9,
       title: 'Do you have electricity in your home?',
       subtitle: '',
-      imageSrc: '/assets/electricity.png',
+      imageSrc: '/assets/electricity.jpg',
       options: [
         'yes',
         'no',
@@ -295,9 +300,12 @@ const Quiz: React.FC = () => {
   return (
     <div className="quiz-container">
       <nav className="navbar">
-        <ul className="navbar-links">
+        <button className="menu-toggle" onClick={toggleMenu}>
+          &#9776; {/* Hamburger icon */}
+        </button>
+        <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
           <li><a href="/">Home</a></li>
-          <li><a href="/profile">Tracking</a></li>
+          <li><a href="/tracking">Tracking</a></li>
           <li><a href="/shop">Shop</a></li>
           <li><a href="/articles">Articles</a></li>
           <li><a href="/profile">Profile</a></li>
@@ -345,8 +353,8 @@ const Quiz: React.FC = () => {
               {answers[currentQuestion]} {questions[currentQuestion]?.unit}
             </p>
             <div className="navigation-buttons">
-              <button onClick={handlePrevious}>&lt;</button>
-              <button onClick={handleNext}>&gt;</button>
+              <button className="nav-button left" onClick={handlePrevious}>&lt;</button>
+              <button className="nav-button right" onClick={handleNext}>&gt;</button>
             </div>
             <div className="progress-bar">
               <div

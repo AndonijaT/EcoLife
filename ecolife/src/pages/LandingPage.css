@@ -446,3 +446,29 @@ blockquote {
 .footer .text-light {
   text-decoration: none;
 }
+
+/* Hide scrollbar */
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-prev, .custom-next {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.custom-prev:hover, .custom-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* src/pages/LandingPage.css */
+.link {
+  position: relative; /* Make sure the parent link is positioned relatively */
+}
+
+.link:hover .shop-notification {
+  visibility: visible; /* Show the notification on hover */
+}
