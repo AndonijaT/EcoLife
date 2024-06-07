@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Shop.css';
 import VideoBackground from '../VideoBackground';
-import { SocialIcon } from 'react-social-icons'
-
+import { SocialIcon } from 'react-social-icons';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
 
 interface Product {
   title: string;
@@ -39,6 +40,15 @@ const Shop: React.FC = () => {
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      window.location.href = '/'; // Redirect to login page after logout
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
     <div className="landing-page">
       <nav className="navigation">
@@ -66,9 +76,10 @@ const Shop: React.FC = () => {
             <span className="text">Tracking</span>
           </Link>
         </div>
+        <button className="logout-button" onClick={handleLogout}>Logout</button>
       </nav>
       <VideoBackground videoSrc="/assets/background-shop.mp4" overlayText="Shop" />
-       <main>
+      <main>
         <div className="shop-products">
           {currentProducts.map((product, index) => (
             <div key={index} className="product-card">
