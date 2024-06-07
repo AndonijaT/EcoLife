@@ -127,12 +127,12 @@ const LandingPage: React.FC = () => {
           <div className="service" onClick={() => handleServiceClick('/shop')}>
             <img src="/assets/service2.png" alt="Shop" />
             <h3>Shop</h3>
-            <p>Money is donated to eco projects</p>
+            <p>We find the best prices for you!</p>
           </div>
           <div className="service" onClick={() => handleServiceClick('/tracking')}>
             <img src="/assets/service3.png" alt="Tracking" />
             <h3>Tracking</h3>
-            <p>Go green</p>
+            <p>How sustainable are you?</p>
           </div>
         </section>
 
