@@ -1,0 +1,29 @@
+.scroll-popup-shop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    max-width: 300px;
+  }
+  
+  .scroll-popup-shop p {
+    margin: 0 0 10px;
+    font-size: 16px;
+  }
+  
+  .close-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
