@@ -35,7 +35,30 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-// articles
+app.get('/api/articles', async (req, res) => {
+  try {
+    const { data } = await axios.get('https://www.ecowatch.com');
+    const $ = cheerio.load(data);
+
+    const articles = [];
+    $('.home-categories__list-item').each((index, element) => {
+      const title = $(element).find('.home-category__title a').text().trim();
+      const link = $(element).find('.home-category__title a').attr('href');
+      const description = $(element).find('.home-category__description p').text().trim();
+
+      articles.push({
+        title,
+        link,
+        description,
+      });
+    });
+
+    res.json(articles);
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    res.status(500).json({ error: 'Error fetching articles' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
