@@ -4,8 +4,8 @@ import axios from 'axios';
 import './Shop.css';
 import VideoBackground from '../VideoBackground';
 import { SocialIcon } from 'react-social-icons';
-import { signOut } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
+import ScrollPopupShop from '../ScrollPopupShop';
+
 
 interface Product {
   title: string;
@@ -17,6 +17,9 @@ interface Product {
 const Shop: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
   const productsPerPage = 12;
 
   useEffect(() => {
@@ -32,22 +35,27 @@ const Shop: React.FC = () => {
     fetchProducts();
   }, []);
 
-  // Get current products
+  const parsePrice = (price: string) => {
+    return parseFloat(price.replace(',', '.').replace(/[^\d.-]/g, ''));
+  };
+
+  const filterProductsByPrice = (product: Product) => {
+    const price = parsePrice(product.price);
+    const min = minPrice ? parseFloat(minPrice) : 0;
+    const max = maxPrice ? parseFloat(maxPrice) : Number.MAX_VALUE;
+    return price >= min && price <= max;
+  };
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products
+    .filter(product => product.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(filterProductsByPrice)
+    .slice(indexOfFirstProduct, indexOfLastProduct);
 
-  // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      window.location.href = '/'; // Redirect to login page after logout
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
+  const totalPages = Math.ceil(products.length / productsPerPage);
 
   return (
     <div className="landing-page">
@@ -76,29 +84,62 @@ const Shop: React.FC = () => {
             <span className="text">Tracking</span>
           </Link>
         </div>
-        <button className="logout-button" onClick={handleLogout}>Logout</button>
       </nav>
       <VideoBackground videoSrc="/assets/background-shop.mp4" overlayText="Shop" />
+      <ScrollPopupShop />
+      <div className="filter-bar">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        <div className="price-filter">
+          <label htmlFor="minPrice">Min Price:</label>
+          <input
+            type="number"
+            id="minPrice"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            className="price-input"
+          />
+          <label htmlFor="maxPrice">Max Price:</label>
+          <input
+            type="number"
+            id="maxPrice"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            className="price-input"
+          />
+        </div>
+      </div>
       <main>
         <div className="shop-products">
-          {currentProducts.map((product, index) => (
-            <div key={index} className="product-card">
-              <a href={product.link} target="_blank" rel="noopener noreferrer">
-                <img src={product.image} alt={product.title} />
-                <h3>{product.title}</h3>
-                <p>{product.price}</p>
-              </a>
-            </div>
-          ))}
+          {currentProducts.length > 0 ? (
+            currentProducts.map((product, index) => (
+              <div key={index} className="product-card">
+                <a href={product.link} target="_blank" rel="noopener noreferrer">
+                  <img src={product.image} alt={product.title} />
+                  <h3>{product.title}</h3>
+                  <p>{product.price}</p>
+                </a>
+              </div>
+            ))
+          ) : (
+            <p>No products found in this price range.</p>
+          )}
         </div>
-        <div className="pagination">
-          <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} className="pagination-btn">
-            &lt;
-          </button>
-          <button onClick={() => paginate(currentPage + 1)} disabled={indexOfLastProduct >= products.length} className="pagination-btn">
-            &gt;
-          </button>
-        </div>
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} className="pagination-btn">
+              &lt;
+            </button>
+            <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages} className="pagination-btn">
+              &gt;
+            </button>
+          </div>
+        )}
         <br />
         <footer className="footer bg-dark text-light py-5">
           <div className="container">
