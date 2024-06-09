@@ -18,6 +18,7 @@ const Profile: React.FC = () => {
   const [results, setResults] = useState<any[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [menuActive, setMenuActive] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -132,7 +133,12 @@ const Profile: React.FC = () => {
   return (
     <div className="profile-container">
       <nav className="navbar">
-        <ul className="navbar-links">
+        <div className="navbar-toggle" onClick={() => setMenuActive(!menuActive)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul className={`navbar-links ${menuActive ? 'active' : ''}`}>
           <li><a href="/">Home</a></li>
           <li><a href="/tracking">Tracking</a></li>
           <li><a href="/shop">Shop</a></li>

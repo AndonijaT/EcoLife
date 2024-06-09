@@ -6,6 +6,9 @@
 
 body, html {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   font-family: Arial, sans-serif;
 }
 
@@ -464,11 +467,3 @@ body::-webkit-scrollbar {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* src/pages/LandingPage.css */
-.link {
-  position: relative; /* Make sure the parent link is positioned relatively */
-}
-
-.link:hover .shop-notification {
-  visibility: visible; /* Show the notification on hover */
-}
