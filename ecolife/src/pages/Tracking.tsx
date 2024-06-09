@@ -1,11 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
+import { useAuth } from '../AuthContext';
 import './Tracking.css';
+import './LandingPage.css'; // Import the LandingPage styles to reuse
 
 const Tracking: React.FC = () => {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const handleFootClick = () => {
     navigate('/quiz'); // Update with your quiz page path
@@ -21,10 +24,46 @@ const Tracking: React.FC = () => {
   };
 
   return (
-    <div className="tracking-page">
-      <div className="logout-container">
-        <button onClick={handleLogout} className="logout-button">Logout</button>
-      </div>
+    <div className="tracking-page landing-page">
+      <nav className="navigation">
+        {currentUser ? (
+          <>
+          <div className="link">
+              <Link to="/">
+                <img src="/assets/home.svg" alt="Home" />
+                <span className="text">Home</span>
+              </Link>
+            </div>
+            <div className="link">
+              <Link to="/articles">
+                <img src="/assets/article.svg" alt="Articles" />
+                <span className="text">Articles</span>
+              </Link>
+            </div>
+            <div className="link">
+              <Link to="/shop">
+                <img src="/assets/shop.svg" alt="Shop" />
+                <span className="text">Shop</span>
+              </Link>
+            </div>
+            
+            <div className="link">
+              <Link to="/profile">
+                <img src="/assets/login.svg" alt="Profile" />
+                <span className="text">Profile</span>
+              </Link>
+            </div>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <div className="link">
+            <Link to="/login">
+              <img src="/assets/login.svg" alt="Login" />
+              <span className="text">Login</span>
+            </Link>
+          </div>
+        )}
+      </nav>
       <div className="tracking-content">
         <h1>"Calculate your ecological footprint!"</h1>
         <p>Take your first step!</p>

@@ -55,17 +55,18 @@ const Shop: React.FC = () => {
           </Link>
         </div>
         <div className="link">
-          <Link to="/shop">
-            <img src="/assets/shop.svg" alt="Shop" />
-            <span className="text">Shop</span>
-          </Link>
-        </div>
-        <div className="link">
           <Link to="/tracking">
             <img src="/assets/tracking.svg" alt="Tracking" />
             <span className="text">Tracking</span>
           </Link>
         </div>
+        <div className="link">
+          <Link to="/profile">
+            <img src="/assets/login.svg" alt="Profile" />
+            <span className="text">Profile</span>
+          </Link>
+        </div>
+       
       </nav>
       <VideoBackground videoSrc="/assets/background-shop.mp4" overlayText="Shop" />
        <main>

@@ -20,7 +20,7 @@ const Popup: React.FC<{ closePopup: () => void }> = ({ closePopup }) => {
   return (
     <div className="popup">
       <div className="popup-content">
-        <h2>Welcome to Eco Life!</h2>
+        <h2>Welcome!</h2>
         <p>Discover the latest articles about sustainable living!</p>
         <button onClick={closePopup}>Explore Now</button>
       </div>
@@ -106,12 +106,6 @@ const Articles: React.FC = () => {
           </Link>
         </div>
         <div className="link">
-          <Link to="/articles">
-            <img src="/assets/article.svg" alt="Articles" />
-            <span className="text">Articles</span>
-          </Link>
-        </div>
-        <div className="link">
           <Link to="/shop">
             <img src="/assets/shop.svg" alt="Shop" />
             <span className="text">Shop</span>
@@ -123,6 +117,13 @@ const Articles: React.FC = () => {
             <span className="text">Tracking</span>
           </Link>
         </div>
+        <div className="link">
+          <Link to="/profile">
+            <img src="/assets/login.svg" alt="Profile" />
+            <span className="text">Profile</span>
+          </Link>
+        </div>
+       
       </nav>
       <VideoBackground videoSrc="/assets/background-shop.mp4" overlayText="Articles" />
       <main>
@@ -144,7 +145,7 @@ const Articles: React.FC = () => {
         </div>
         <br />
         <section className="testimonials-carousel">
-          <h2>Clients Talk</h2>
+          <h2>Leave an opinion</h2>
           <div className="testimonial-card">
             {testimonials.length > 0 ? (
               <div className="testimonial-content">

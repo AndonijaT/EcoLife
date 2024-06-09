@@ -53,3 +53,97 @@
 .tracking-content .foot-button:hover img {
   transform: scale(1.1);
 }
+/* Import the common styles */
+@import './LandingPage.css';
+
+/* Specific styles for the tracking page */
+.tracking-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.tracking-content {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.tracking-content h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.tracking-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.foot-button {
+  padding: 10px 20px;
+  background-color: #e9e9e900;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.foot-button:hover {
+  background-color: #ffffff00;
+}
+
+.logout-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ff9500;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #ec971f;
+}
+
+/* Navigation */
+
+.navigation {
+  text-align: left;
+  color: white;
+  bottom: 0;
+  position: fixed;
+  left: 0; /* Align to the left */
+  z-index: 1000;
+  mix-blend-mode: difference;
+  display: flex; /* Ensure it's a flex container */
+  flex-direction: column; /* Stack links vertically */
+}
+
+.navigation .link {
+  margin: 10px;
+  padding: 5px;
+}
+
+.navigation a {
+  color: white;
+  text-decoration: none;
+}
+
+.navigation a .text {
+  margin-left: 5px;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.navigation a:hover .text {
+  opacity: 1;
+}
