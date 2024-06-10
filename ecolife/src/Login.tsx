@@ -1,13 +1,14 @@
-// src/Login.tsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from './firebaseConfig';
 import './Login.css'; // Import the CSS file for styling
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [resetEmail, setResetEmail] = useState('');
+  const [showResetForm, setShowResetForm] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -15,6 +16,17 @@ const Login: React.FC = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/'); // Redirect to the landing page
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await sendPasswordResetEmail(auth, resetEmail);
+      alert('Password reset email sent!');
+      setShowResetForm(false);
     } catch (error: any) {
       alert(error.message);
     }
@@ -41,7 +53,6 @@ const Login: React.FC = () => {
               placeholder="Email"
               required
               autoComplete="off"
-
             />
             <input
               type="password"
@@ -50,12 +61,30 @@ const Login: React.FC = () => {
               placeholder="Password"
               required
               autoComplete="off"
-
             />
             <button type="submit">Login</button>
           </form>
-          <a href="/register">Don't have an account? Register</a>
+          <a href="#" onClick={() => setShowResetForm(true)}>Forgot Password?</a>
+          <br></br>
+          <Link to="/register">Don't have an account? Register</Link>
         </div>
+        {showResetForm && (
+          <div className="reset-box">
+            <h1>Reset Password</h1>
+            <form onSubmit={handleResetPassword}>
+              <input
+                type="email"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                placeholder="Email"
+                required
+                autoComplete="off"
+              />
+              <button type="submit">Send Reset Email</button>
+            </form>
+            <button onClick={() => setShowResetForm(false)}>Cancel</button>
+          </div>
+        )}
       </div>
     </>
   );

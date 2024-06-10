@@ -36,7 +36,7 @@ body, html {
   height: 100vh;
 }
 
-.login-box {
+.login-box, .reset-box {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -44,23 +44,23 @@ body, html {
   text-align: center;
 }
 
-.login-box h1 {
+.login-box h1, .reset-box h1 {
   margin-bottom: 20px;
 }
 
-.login-box form {
+.login-box form, .reset-box form {
   display: flex;
   flex-direction: column;
 }
 
-.login-box input {
+.login-box input, .reset-box input {
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.login-box button {
+.login-box button, .reset-box button {
   padding: 10px;
   border: none;
   border-radius: 4px;
@@ -69,16 +69,16 @@ body, html {
   cursor: pointer;
 }
 
-.login-box button:hover {
+.login-box button:hover, .reset-box button:hover {
   background-color: #218838;
 }
 
-.login-box a {
+.login-box a, .reset-box a {
   margin-top: 10px;
   color: #007bff;
   text-decoration: none;
 }
 
-.login-box a:hover {
+.login-box a:hover, .reset-box a:hover {
   text-decoration: underline;
 }

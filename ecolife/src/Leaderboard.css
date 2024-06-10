@@ -1,13 +1,14 @@
 .leaderboard {
-  background: rgb(27, 136, 166);
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  margin: 20px 0;
-}
-
-.leaderboard h2 {
+    background: rgb(27, 136, 166);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .leaderboard h2 {
     margin-bottom: 1rem;
+    color: white;
   }
   
   .podium {
@@ -49,13 +50,17 @@
   
   .podium-rank {
     position: absolute;
-    top: 10px; /* Positioning the rank number at the top */
+    top: -30px; /* Adjust this value to position the rank number above the item */
     left: 50%;
     transform: translateX(-50%);
     font-size: 2rem;
     font-weight: bold;
     margin: 0; /* Remove default margin */
     z-index: 1; /* Ensure rank number is above other content */
+    background: rgba(19, 85, 156, 0.41); /* Add background for better readability */
+    color: white; /* White text for better visibility */
+    padding: 5px 10px; /* Add padding around the number */
+    border-radius: 5px; /* Rounded corners for better aesthetics */
   }
   
   .podium-user,
@@ -69,6 +74,7 @@
     height: 80px;
     border-radius: 50%;
     margin: 10px auto; /* Center the picture horizontally */
+    border: 2px solid white; /* Add a border for better visibility */
   }
   
   .leaderboard-list {
@@ -88,3 +94,4 @@
     border-radius: 50%;
     margin-right: 10px;
   }
+  

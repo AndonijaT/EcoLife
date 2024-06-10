@@ -1,9 +1,10 @@
-// src/Register.tsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebaseConfig';
 import './Register.css'; // Import the CSS file for styling
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,9 +15,9 @@ const Register: React.FC = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/profile'); // Redirect to the landing page
+      navigate('/profile'); // Redirect to the profile page
     } catch (error: any) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -51,8 +52,9 @@ const Register: React.FC = () => {
             />
             <button type="submit">Register</button>
           </form>
-          <a href="/login">Already have an account? Login</a>
+          <Link to="/login">Already have an account? Login</Link>
         </div>
+        <ToastContainer />
       </div>
     </>
   );
