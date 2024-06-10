@@ -50,7 +50,7 @@ const LandingPage: React.FC = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate('/login'); // Redirect to login page after logout
+      navigate('/'); // Redirect to login page after logout
     } catch (error) {
       toast.error("Error logging out:");
     }
