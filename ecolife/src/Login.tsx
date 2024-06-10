@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from './firebaseConfig';
 import './Login.css'; // Import the CSS file for styling
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +19,7 @@ const Login: React.FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/'); // Redirect to the landing page
     } catch (error: any) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -25,10 +27,10 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       await sendPasswordResetEmail(auth, resetEmail);
-      alert('Password reset email sent!');
+      toast.success('Password reset email sent!');
       setShowResetForm(false);
     } catch (error: any) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -85,6 +87,7 @@ const Login: React.FC = () => {
             <button onClick={() => setShowResetForm(false)}>Cancel</button>
           </div>
         )}
+        <ToastContainer />
       </div>
     </>
   );
