@@ -57,6 +57,11 @@ const Shop: React.FC = () => {
 
   const totalPages = Math.ceil(products.length / productsPerPage);
 
+  const aboutUs = {
+    title: "Why Eco-Friendly Products Matter",
+    content: "Eco-friendly products are important because they help reduce pollution, conserve resources, and protect ecosystems. By choosing sustainable products, we can minimize our environmental footprint, support ethical practices, and promote a healthier planet for future generations. Join us in making a positive impact through conscious consumption."
+  };
+
   return (
     <div className="landing-page">
       <nav className="navigation">
@@ -141,6 +146,13 @@ const Shop: React.FC = () => {
             </button>
           </div>
         )}
+
+
+        <div className="about-section">
+          <h1>{aboutUs.title}</h1>
+          <p>{aboutUs.content}</p>
+        </div>
+
         <br />
         <footer className="footer bg-dark text-light py-5">
           <div className="container">
