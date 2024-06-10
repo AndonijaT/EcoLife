@@ -3,7 +3,7 @@ import { useAuth } from '../../AuthContext';
 import { db } from '../../firebaseConfig'; 
 import { collection, addDoc, Timestamp } from 'firebase/firestore'; 
 import './Quiz.css';
-import './../Navbar.css'
+import './../Navbar.css';
 
 const Quiz: React.FC = () => {
   const { currentUser } = useAuth();
@@ -11,7 +11,9 @@ const Quiz: React.FC = () => {
   const [answers, setAnswers] = useState(Array(12).fill(0)); 
   const [finalScore, setFinalScore] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // State to control the mobile menu
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showFirstPopup, setShowFirstPopup] = useState(true);
+  const [showSecondPopup, setShowSecondPopup] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -294,9 +296,16 @@ const Quiz: React.FC = () => {
       console.error("No current user authenticated!");
     }
   };
-  
-     
-  
+
+  const closeFirstPopup = () => {
+    setShowFirstPopup(false);
+    setShowSecondPopup(true);
+  };
+
+  const closeSecondPopup = () => {
+    setShowSecondPopup(false);
+  };
+
   return (
     <div className="quiz-container">
       <nav className="navbar">
@@ -311,59 +320,74 @@ const Quiz: React.FC = () => {
           <li><a href="/profile">Profile</a></li>
         </ul>
       </nav>
-      {showSummary ? (
+      {showFirstPopup && (
+        <div className="popup">
+          <div className="popup-inner">
+            <div className="popup-text">Welcome to our footprint calculator!</div>
+            <button onClick={closeFirstPopup}>Close</button>
+          </div>
+        </div>
+      )}
+      {showSecondPopup && (
+        <div className="popup">
+          <div className="popup-inner">
+            <div className="popup-text">Track your sustainability progress by simply answering the following questions!</div>
+            <button onClick={closeSecondPopup}>Close</button>
+          </div>
+        </div>
+      )}
+      {!showSummary && !showFirstPopup && !showSecondPopup && (
+        <div className="quiz-card">
+          <h2>{questions[currentQuestion]?.title}</h2>
+          <p>{questions[currentQuestion]?.subtitle}</p>
+          <img src={questions[currentQuestion]?.imageSrc} alt={questions[currentQuestion]?.title} className="question-image" />
+          {questions[currentQuestion]?.options ? (
+            <div className="options">
+              {questions[currentQuestion]?.options?.map((option, index) => (
+                <label key={index}>
+                  <input
+                    type="radio"
+                    name={`question-${currentQuestion}`}
+                    value={index}
+                    checked={answers[currentQuestion] === index}
+                    onChange={() => handleValueChange(currentQuestion, index)}
+                  />
+                  {option}
+                </label>
+              ))}
+            </div>
+          ) : (
+            <input
+              type="range"
+              value={answers[currentQuestion]}
+              min={questions[currentQuestion]?.min}
+              max={questions[currentQuestion]?.max}
+              step={questions[currentQuestion]?.step}
+              onChange={(e) => handleValueChange(currentQuestion, Number(e.target.value))}
+              className="range-slider"
+            />
+          )}
+          <p>
+            {answers[currentQuestion]} {questions[currentQuestion]?.unit}
+          </p>
+          <div className="navigation-buttons">
+            <button className="nav-button left" onClick={handlePrevious}>&lt;</button>
+            <button className="nav-button right" onClick={handleNext}>&gt;</button>
+          </div>
+          <div className="progress-bar">
+            <div
+              className="progress"
+              style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+            ></div>
+          </div>
+        </div>
+      )}
+      {showSummary && (
         <div className="summary">
           <h2>Summary</h2>
           <p>Your sustainability score is: {finalScore}</p>
           <p>{emojis[finalScore - 1]}</p>
         </div>
-      ) : (
-        <>
-          <div className="quiz-container">
-            <h2>{questions[currentQuestion]?.title}</h2>
-            <p>{questions[currentQuestion]?.subtitle}</p>
-            <img src={questions[currentQuestion]?.imageSrc} alt={questions[currentQuestion]?.title} className="question-image" />
-            {questions[currentQuestion]?.options ? (
-              <div className="options">
-                {questions[currentQuestion]?.options?.map((option, index) => (
-                  <label key={index}>
-                    <input
-                      type="radio"
-                      name={`question-${currentQuestion}`}
-                      value={index}
-                      checked={answers[currentQuestion] === index}
-                      onChange={() => handleValueChange(currentQuestion, index)}
-                    />
-                    {option}
-                  </label>
-                ))}
-              </div>
-            ) : (
-              <input
-                type="range"
-                value={answers[currentQuestion]}
-                min={questions[currentQuestion]?.min}
-                max={questions[currentQuestion]?.max}
-                step={questions[currentQuestion]?.step}
-                onChange={(e) => handleValueChange(currentQuestion, Number(e.target.value))}
-                className="range-slider"
-              />
-            )}
-            <p>
-              {answers[currentQuestion]} {questions[currentQuestion]?.unit}
-            </p>
-            <div className="navigation-buttons">
-              <button className="nav-button left" onClick={handlePrevious}>&lt;</button>
-              <button className="nav-button right" onClick={handleNext}>&gt;</button>
-            </div>
-            <div className="progress-bar">
-              <div
-                className="progress"
-                style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-        </>
       )}
     </div>
   );
