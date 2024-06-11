@@ -8,6 +8,8 @@ import { db } from '../firebaseConfig';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import QuotesSection from './QuotesSection';
+
 
 interface Article {
   title: string;
@@ -144,6 +146,7 @@ const Articles: React.FC = () => {
           </div>
         </div>
         <br />
+        <QuotesSection />
         <section className="testimonials-carousel">
           <h2>Leave an opinion</h2>
           <div className="testimonial-card">
