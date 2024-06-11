@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Shop.css';
 import VideoBackground from '../VideoBackground';
-import { SocialIcon } from 'react-social-icons'
+import { SocialIcon } from 'react-social-icons';
+import ScrollPopupShop from '../ScrollPopupShop';
 
 
 interface Product {
@@ -16,6 +17,9 @@ interface Product {
 const Shop: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
   const productsPerPage = 12;
 
   useEffect(() => {
@@ -31,13 +35,32 @@ const Shop: React.FC = () => {
     fetchProducts();
   }, []);
 
-  // Get current products
+  const parsePrice = (price: string) => {
+    return parseFloat(price.replace(',', '.').replace(/[^\d.-]/g, ''));
+  };
+
+  const filterProductsByPrice = (product: Product) => {
+    const price = parsePrice(product.price);
+    const min = minPrice ? parseFloat(minPrice) : 0;
+    const max = maxPrice ? parseFloat(maxPrice) : Number.MAX_VALUE;
+    return price >= min && price <= max;
+  };
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products
+    .filter(product => product.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(filterProductsByPrice)
+    .slice(indexOfFirstProduct, indexOfLastProduct);
 
-  // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  const aboutUs = {
+    title: "Why Eco-Friendly Products Matter",
+    content: "Eco-friendly products are important because they help reduce pollution, conserve resources, and protect ecosystems. By choosing sustainable products, we can minimize our environmental footprint, support ethical practices, and promote a healthier planet for future generations. Join us in making a positive impact through conscious consumption."
+  };
 
   return (
     <div className="landing-page">
@@ -69,26 +92,67 @@ const Shop: React.FC = () => {
        
       </nav>
       <VideoBackground videoSrc="/assets/background-shop.mp4" overlayText="Shop" />
-       <main>
+      <ScrollPopupShop />
+      <div className="filter-bar">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        <div className="price-filter">
+          <label htmlFor="minPrice">Min Price:</label>
+          <input
+            type="number"
+            id="minPrice"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            className="price-input"
+          />
+          <label htmlFor="maxPrice">Max Price:</label>
+          <input
+            type="number"
+            id="maxPrice"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            className="price-input"
+          />
+        </div>
+      </div>
+      <main>
         <div className="shop-products">
-          {currentProducts.map((product, index) => (
-            <div key={index} className="product-card">
-              <a href={product.link} target="_blank" rel="noopener noreferrer">
-                <img src={product.image} alt={product.title} />
-                <h3>{product.title}</h3>
-                <p>{product.price}</p>
-              </a>
-            </div>
-          ))}
+          {currentProducts.length > 0 ? (
+            currentProducts.map((product, index) => (
+              <div key={index} className="product-card">
+                <a href={product.link} target="_blank" rel="noopener noreferrer">
+                  <img src={product.image} alt={product.title} />
+                  <h3>{product.title}</h3>
+                  <p>{product.price}</p>
+                </a>
+              </div>
+            ))
+          ) : (
+            <p>No products found in this price range.</p>
+          )}
         </div>
-        <div className="pagination">
-          <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} className="pagination-btn">
-            &lt;
-          </button>
-          <button onClick={() => paginate(currentPage + 1)} disabled={indexOfLastProduct >= products.length} className="pagination-btn">
-            &gt;
-          </button>
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} className="pagination-btn">
+              &lt;
+            </button>
+            <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages} className="pagination-btn">
+              &gt;
+            </button>
+          </div>
+        )}
+
+
+        <div className="about-section">
+          <h1>{aboutUs.title}</h1>
+          <p>{aboutUs.content}</p>
         </div>
+
         <br />
         <footer className="footer bg-dark text-light py-5">
           <div className="container">

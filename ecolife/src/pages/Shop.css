@@ -380,13 +380,13 @@ blockquote {
 }
 
 .product-card {
-  background-color: #333; /* Tamnija boja pozadine */
+  background-color: #333;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Dodata senka */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
   width: 200px;
   text-align: center;
-  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; /* Dodata tranzicija za pozadinu i senku */
+  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; 
 }
 
 .product-card img {
@@ -398,12 +398,12 @@ blockquote {
 .product-card h3 {
   font-size: 16px;
   margin: 10px 0;
-  color: #fff; /* Bela boja teksta */
+  color: #fff;
 }
 
 .product-card p {
   font-size: 14px;
-  color: #ddd; /* Svetlija boja za cenu */
+  color: #ddd; 
 }
 
 .product-card a {
@@ -413,9 +413,9 @@ blockquote {
 
 .product-card:hover {
   transform: scale(1.05);
-  background-color: #444; /* Svetlija tamna nijansa za hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Dublja senka na hover */
-  border: 1px solid #fff; /* Bela ivica na hover */
+  background-color: #444; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); 
+  border: 1px solid #fff; 
 }
 
 /* Paginacija */
@@ -449,4 +449,117 @@ blockquote {
 
 .pagination-btn:hover:not(:disabled) {
   background-color: #218838;
+}
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(34, 34, 34, 0.9); 
+  color: #f0f0f0; 
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 20px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #222; 
+  color: #f0f0f0; 
+}
+
+.price-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; 
+}
+
+.price-filter label {
+  margin: 0 10px;
+  color: #f0f0f0; 
+}
+
+.price-input {
+  width: 100px;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  margin-right: 10px;
+  background-color: #222; 
+  color: #f0f0f0; 
+}
+
+@media (max-width: 600px) {
+  .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .price-filter {
+    flex-direction: row; 
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .price-filter label,
+  .price-input {
+    margin: 10px 0;
+    flex: 1;
+    min-width: 45%;
+  }
+
+  .price-input {
+    margin-right: 0; 
+  }
+
+  .search-input {
+    margin: 10px 0;
+    width: 100%;
+  }
+}
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-10px); 
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+}
+
+.about-section {
+  padding: 50px 20px;
+  background-color: #333;
+  color: #fff; 
+  text-align: center; 
+  border-radius: 8px;
+  margin: 50px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  position: relative; 
+  overflow: hidden; 
+}
+
+.about-section h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #fff; 
+}
+
+.about-section p {
+  font-size: 18px;
+  color: #ddd; 
+}
+
+.about-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
