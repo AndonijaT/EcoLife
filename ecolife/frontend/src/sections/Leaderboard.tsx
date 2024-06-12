@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { db } from './firebaseConfig';
+import { db } from './../firebaseConfig';
 import { collection, query, orderBy, getDocs, Timestamp, doc, getDoc } from 'firebase/firestore';
-import './Leaderboard.css';
+import './../styles/Leaderboard.css';
 
 interface QuizResult {
   date: Timestamp;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './QuotesSection.css'; 
+import './../styles/QuotesSection.css'; 
 
 interface Quote {
   text: string;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebaseConfig';
-import './Register.css'; // Import the CSS file for styling
+import { auth } from './../firebaseConfig';
+import './../styles/Register.css'; // Import the CSS file for styling
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

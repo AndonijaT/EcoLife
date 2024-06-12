@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../AuthContext';
-import { db } from '../../firebaseConfig'; 
+import { useAuth } from './../AuthContext';
+import { db } from './../firebaseConfig'; 
 import { collection, addDoc, Timestamp } from 'firebase/firestore'; 
-import './Quiz.css';
+import './../styles/Quiz.css';
 import './../Navbar.css';
 
 const Quiz: React.FC = () => {

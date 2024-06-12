@@ -1,6 +1,6 @@
 // src/VideoBackground.tsx
 import React from 'react';
-import './VideoBackground.css';
+import './../styles/VideoBackground.css';
 
 interface VideoBackgroundProps {
   videoSrc: string;

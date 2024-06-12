@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import './LandingPage.css';
+import './../styles/LandingPage.css';
 import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 import VideoBackground from '../sections/VideoBackground';
 import { useAuth } from '../AuthContext';
@@ -10,11 +10,11 @@ import { auth } from '../firebaseConfig';
 import { db } from '../firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import NewsletterForm from './../NewsletterForm'; // Import the component
+import NewsletterForm from './../sections/NewsletterForm'; // Import the component
 import { SocialIcon } from 'react-social-icons'
-import Leaderboard from '../Leaderboard';
+import Leaderboard from '../sections/Leaderboard';
 import Carousel from 'react-bootstrap/Carousel'; // Correct import
-import ScrollPopup from './../ScrollPopup'; // Import the ScrollPopup component
+import ScrollPopup from './../sections/ScrollPopup'; // Import the ScrollPopup component
 
 const LandingPage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);

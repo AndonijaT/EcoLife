@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ScrollPopup.css';
+import './../styles/ScrollPopup.css';
 
 const ScrollPopup: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);

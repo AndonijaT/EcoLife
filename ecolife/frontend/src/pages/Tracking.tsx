@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { useAuth } from '../AuthContext';
-import './Tracking.css';
-import './LandingPage.css'; // Import the LandingPage styles to reuse
+import './../styles/Tracking.css';
+import './../styles/LandingPage.css'; // Import the LandingPage styles to reuse
 
 const Tracking: React.FC = () => {
   const navigate = useNavigate();

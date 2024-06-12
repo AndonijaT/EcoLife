@@ -1,10 +1,10 @@
 // src/components/NewsletterForm.tsx
 import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from './firebaseConfig';
+import { db } from './../firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './NewsletterForm.css';
+import './../styles/NewsletterForm.css';
 
 const NewsletterForm: React.FC = () => {
   const [email, setEmail] = useState('');

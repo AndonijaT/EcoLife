@@ -4,8 +4,8 @@ import { db, storage } from '../firebaseConfig'; // Ensure the db and storage im
 import { useAuth } from '../AuthContext';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // This imports and registers the required Chart.js components
-import './Profile.css';
-import './Navbar.css'; 
+import './../styles/Profile.css';
+import './../styles/Navbar.css'; 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebaseConfig';

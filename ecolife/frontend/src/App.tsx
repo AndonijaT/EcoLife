@@ -5,13 +5,13 @@ import LandingPage from './pages/LandingPage';
 import Shop from './pages/Shop';
 import Articles from './pages/Articles';
 import Tracking from './pages/Tracking';
-import Login from './Login';
-import Register from './Register';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Profile from './pages/Profile';
 import SubmitTestimonial from './pages/SubmitTestimonial';
 import ProtectedRoute from './ProtectedRoute';
 import { AuthProvider, useAuth } from './AuthContext';
-import Quiz from './pages/calculator/Quiz';
+import Quiz from './pages/Quiz';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 

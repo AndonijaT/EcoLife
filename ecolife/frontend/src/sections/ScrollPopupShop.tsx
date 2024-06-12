@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './ScrollPopupShop.css';
+import './../styles/ScrollPopupShop.css';
 
 const ScrollPopupShop: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './Shop.css';
+import './../styles/Shop.css';
 import VideoBackground from '../sections/VideoBackground';
 import { SocialIcon } from 'react-social-icons';
-import ScrollPopupShop from '../ScrollPopupShop';
+import ScrollPopupShop from '../sections/ScrollPopupShop';
 
 
 interface Product {
