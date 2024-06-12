@@ -3,7 +3,7 @@ import { useAuth } from './../AuthContext';
 import { db } from './../firebaseConfig'; 
 import { collection, addDoc, Timestamp } from 'firebase/firestore'; 
 import './../styles/Quiz.css';
-import './../Navbar.css';
+import './../styles/Navbar.css';
 
 const Quiz: React.FC = () => {
   const { currentUser } = useAuth();
@@ -387,6 +387,9 @@ const Quiz: React.FC = () => {
           <h2>Summary</h2>
           <p>Your sustainability score is: {finalScore}</p>
           <p>{emojis[finalScore - 1]}</p>
+          <a href="/profile">
+            <button className="view-progress-button">View your progress</button>
+          </a>
         </div>
       )}
     </div>

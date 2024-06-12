@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './../styles/LandingPage.css';
@@ -10,19 +10,18 @@ import { auth } from '../firebaseConfig';
 import { db } from '../firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import NewsletterForm from './../sections/NewsletterForm'; // Import the component
-import { SocialIcon } from 'react-social-icons'
+import NewsletterForm from './../sections/NewsletterForm';
+import { SocialIcon } from 'react-social-icons';
 import Leaderboard from '../sections/Leaderboard';
-import Carousel from 'react-bootstrap/Carousel'; // Correct import
-import ScrollPopup from './../sections/ScrollPopup'; // Import the ScrollPopup component
+import Carousel from 'react-bootstrap/Carousel';
+import ScrollPopup from './../sections/ScrollPopup';
 
 const LandingPage: React.FC = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const { currentUser } = useAuth();
   const [testimonials, setTestimonials] = useState<any[]>([]);
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchTestimonials = async () => {
       const testimonialsSnapshot = await getDocs(collection(db, 'testimonials'));
       const testimonialsData = testimonialsSnapshot.docs.map(doc => doc.data());
@@ -161,7 +160,9 @@ const LandingPage: React.FC = () => {
               </Carousel.Item>
             ))}
           </Carousel>
-          <button className="add-testimonial-btn" onClick={handleAddTestimonial}>+</button>
+          {currentUser && (
+            <button className="add-testimonial-btn" onClick={handleAddTestimonial}>+</button>
+          )}
         </section>
 
         <section className="leaderboard-section">

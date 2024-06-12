@@ -25,7 +25,7 @@ const Shop: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get<Product[]>('http://localhost:3001/api/products');
+        const response = await axios.get<Product[]>('http://localhost:5000/api/products');
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);

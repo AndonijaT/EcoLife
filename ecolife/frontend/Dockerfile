@@ -13,17 +13,8 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Build the application
-RUN npm run build
+# Expose the port the app runs on
+EXPOSE 3000
 
-# Use the official Nginx image to serve the frontend
-FROM nginx:alpine
-
-# Copy the build output to the Nginx HTML directory
-COPY --from=0 /usr/src/app/build /usr/share/nginx/html
-
-# Expose the port Nginx runs on
-EXPOSE 5000
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start the application
+CMD ["npm", "start"]
