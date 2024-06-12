@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './LandingPage.css';
 import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
-import VideoBackground from '../VideoBackground';
+import VideoBackground from '../sections/VideoBackground';
 import { useAuth } from '../AuthContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebaseConfig';

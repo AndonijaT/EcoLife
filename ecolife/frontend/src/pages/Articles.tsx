@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Articles.css';
-import VideoBackground from '../VideoBackground';
+import VideoBackground from '../sections/VideoBackground';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import QuotesSection from './QuotesSection';
+import QuotesSection from '../sections/QuotesSection';
 
 
 interface Article {
