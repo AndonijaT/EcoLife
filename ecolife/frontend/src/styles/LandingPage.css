@@ -1,0 +1,489 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+.hero h1 {
+  font-family: 'Cinzel', serif;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.landing-page {
+  text-align: center;
+  position: relative;
+  z-index: 0; /* Set default z-index */
+}
+
+.hero, .white-section, .testimonials {
+  padding: 50px 20px;
+  position: relative;
+  z-index: 2; /* Ensure content sections overlap the fixed text */
+  background-color: white;
+}
+
+.hero {
+  background-color: #f4f4f4;
+  z-index: 2; /* Ensure this section overlaps the fixed text */
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.hero-image {
+  width: 80%;
+  max-width: 600px;
+  height: auto;
+}
+
+.white-section {
+  text-align: center;
+}
+
+.testimonials {
+  background-color: #fff;
+}
+
+.testimonials h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.testimonials p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.testimonial-cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 200px;
+}
+
+blockquote {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.author {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Navigation */
+
+.navigation {
+  text-align: left;
+  color: white;
+  bottom: 0;
+  position: fixed;
+  z-index: 1000;
+  mix-blend-mode: difference;
+}
+
+.navigation .link {
+  margin: 10px;
+  padding: 5px;
+}
+
+.navigation a {
+  color: white;
+  text-decoration: none;
+}
+
+.navigation a .text {
+  margin-left: 5px;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.navigation a:hover .text {
+  opacity: 1;
+}
+
+/* Add styles for the services section */
+.services {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.services h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.services .service {
+  display: inline-block;
+  margin: 0 20px;
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Adjust width as needed */
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for smooth effects */
+}
+
+.services .service:hover {
+  background-color: #28a745; /* Change background color on hover */
+  transform: scale(1.05); /* Scale up slightly on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a deeper shadow for pop effect */
+}
+
+.services .service img {
+  width: 100%;
+  height: 200px; /* Set a fixed height for the images */
+  object-fit: cover; /* Ensure the images are all the same size */
+  border-radius: 8px;
+}
+
+.services .service h3 {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.services .service p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Ensure links are styled properly */
+.services .service a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.services .service a:hover {
+  text-decoration: underline;
+}
+
+/* Newsletter section */
+.newsletter {
+  background-color: #28a745;
+  padding: 40px 20px;
+  border-radius: 8px;
+  margin: 50px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.newsletter-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.newsletter-text {
+  flex: 1;
+  color: white;
+  text-align: left;
+}
+
+.newsletter-text h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.newsletter-text p {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.newsletter-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.newsletter-input input {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px 0 0 25px;
+  outline: none;
+  font-size: 16px;
+}
+
+.newsletter-input button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0 25px 25px 0;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.newsletter-input button:hover {
+  background-color: #444;
+}
+
+/* Testimonials carousel section */
+.testimonials-carousel {
+  padding: 50px 20px;
+  background-color: #f4f4f4;
+}
+
+.testimonials-carousel h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333; /* Ensure the heading is visible */
+
+}
+
+.testimonial-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+.testimonial-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.testimonial-text {
+  flex: 1;
+  text-align: left;
+  color: #333; /* Ensure the text is visible */
+}
+
+.testimonial-text h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: #333; /* Ensure the text is visible */
+}
+.testimonial-text .title {
+  font-size: 16px;
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.testimonial-text .text {
+  font-size: 16px;
+  color: #555;
+}
+
+.testimonial-image {
+  margin-left: 20px;
+}
+
+.testimonial-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonial-navigation {
+  display: flex;
+  gap: 10px;
+}
+
+.testimonial-navigation button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.testimonial-navigation button:hover {
+  background-color: #218838;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+}
+
+.footer h5 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.footer p {
+  margin-bottom: 0.5rem;
+}
+
+.footer .btn-warning {
+  background-color: #f0ad4e;
+  border: none;
+  color: #333;
+}
+
+.footer .btn-warning:hover {
+  background-color: #ec971f;
+  color: #fff;
+}
+
+.footer .d-flex a {
+  font-size: 1.5rem;
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-inner {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.logout-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #f0ad4e;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #ec971f;
+}
+.login-link {
+  display: block;
+  margin-top: 20px;
+  color: blue;
+  text-decoration: underline;
+}
+
+
+.footer .d-flex a:hover {
+  color: #f0ad4e;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer .row {
+  justify-content: space-between;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid #444;
+  font-size: 0.875rem;
+}
+
+
+.add-testimonial-btn {
+  align-items: center;
+  justify-content: center;
+}
+
+.add-testimonial-btn:hover {
+  background-color: #45a049;
+}
+.footer .fab {
+  font-size: 1.5rem; /* Adjust the size as needed */
+}
+
+.footer .fab:hover {
+  color: #0e76a8; /* LinkedIn blue for LinkedIn icon */
+}
+
+.footer .fab.fa-twitter:hover {
+  color: #1da1f2; /* Twitter blue for Twitter icon */
+}
+
+.footer .text-light {
+  text-decoration: none;
+}
+
+/* Hide scrollbar */
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-prev, .custom-next {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.custom-prev:hover, .custom-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.add-testimonial-btn {
+  display: inline-block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-testimonial-btn:hover {
+  background-color: #0056b3;
+}
